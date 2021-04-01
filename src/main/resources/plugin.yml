@@ -1,0 +1,12 @@
+  name: "KSurvivalEUPlugin"
+  main: "me.aggellos2001.ksurvivaleuplugin.plugin.KSurvivalEUPlugin"
+  version: ${version}
+  author: "aggellos2001"
+  api-version: "1.16"
+  depend:
+    - Vault
+    - Essentials
+    - LuckPerms
+    - GriefPrevention
+    - SkinsRestorer
+    - CoreProtect
