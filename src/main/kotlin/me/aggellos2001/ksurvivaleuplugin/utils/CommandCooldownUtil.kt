@@ -40,6 +40,7 @@ import kotlin.time.toDuration
  *  player.setCoolDown(commandName, cooldown.seconds)
  *  }
  *
+ * Cache expiry can be modified to fit your needs as well as the permission to bypass the cooldown
  */
 private val coolDownCache: Cache<String, HashMap<String, Duration>> =
     Caffeine.newBuilder().scheduler(Scheduler.systemScheduler()).expireAfterAccess(3, TimeUnit.HOURS).build()
@@ -70,9 +71,7 @@ fun Player.setCoolDown(key: String, cooldown: Duration) {
  * if no cooldown was found.
  */
 fun Player.getCoolDown(key: String): Pair<Boolean, Duration> {
-
     val noCooldown = false to Duration.ZERO
-
     if (this.hasPermission("seu.cooldown")) return noCooldown
     val playerCooldowns = coolDownCache.getIfPresent(this.name) ?: return noCooldown
     val commandCooldown = playerCooldowns.getOrDefault(key, null) ?: return noCooldown
@@ -82,17 +81,6 @@ fun Player.getCoolDown(key: String): Pair<Boolean, Duration> {
         true to commandCooldown - currentTime
     else noCooldown
 
-//    if (coolDownCache.containsKey(this)) {
-//        if (coolDownCache.getValue(this).containsKey(key)) {
-//            val commandCoolDown = coolDownCache.getValue(this).getValue(key)
-//            val currentTime = System.currentTimeMillis().toDuration(TimeUnit.MILLISECONDS)
-//            return if (currentTime < commandCoolDown)
-//                true to commandCoolDown - currentTime
-//            else
-//                false to Duration.ZERO
-//        }
-//    }
-//    return false to Duration.ZERO
 }
 
 /**
