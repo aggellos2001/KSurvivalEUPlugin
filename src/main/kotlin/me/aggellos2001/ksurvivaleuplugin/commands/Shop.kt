@@ -2,8 +2,9 @@ package me.aggellos2001.ksurvivaleuplugin.commands
 
 import co.aikar.commands.BaseCommand
 import co.aikar.commands.annotation.CommandAlias
-import co.aikar.commands.annotation.Conditions
 import co.aikar.commands.annotation.Default
+import com.github.benmanes.caffeine.cache.Caffeine
+import com.github.benmanes.caffeine.cache.Scheduler
 import me.aggellos2001.ksurvivaleuplugin.hooks.EssentialsHook.getEssentialsUser
 import me.aggellos2001.ksurvivaleuplugin.persistentdata.ShopPrices.getShopPrice
 import me.aggellos2001.ksurvivaleuplugin.utils.colorize
@@ -16,14 +17,24 @@ import org.bukkit.Material
 import org.bukkit.entity.Player
 import org.bukkit.inventory.ItemFlag
 import org.bukkit.inventory.ItemStack
+import kotlin.time.minutes
+import kotlin.time.toJavaDuration
 
 @CommandAlias("shop")
-@Conditions("cooldown:time=2,name=Shop")
 object Shop : BaseCommand() {
+
+    private val shopUICache =
+        Caffeine.newBuilder().scheduler(Scheduler.systemScheduler()).expireAfterAccess(30.minutes.toJavaDuration())
+            .build<Pair<Player, Int>, PaginatedGui>()
 
     @Default
     fun shopUI(player: Player, @Default("0") filter: Int) {
-        PaginatedGui(6, 45, "<g:#ff0000:#001fff>SurvivalEU Shop".colorize()).run {
+        var shopUI = shopUICache.getIfPresent(player to filter)
+        if (shopUI != null) {
+            shopUI.open(player)
+            return
+        }
+        shopUI = PaginatedGui(6, 45, "<g:#ff0000:#001fff>SurvivalEU Shop".colorize()).apply {
             setDefaultClickAction {
                 it.isCancelled = true
             }
@@ -37,7 +48,7 @@ object Shop : BaseCommand() {
             setItem(6, 4, ItemBuilder.from(Material.GRAY_DYE)
                 .setName("&c&lPrevious".colorize())
                 .asGuiItem {
-                    this.previous();
+                    this.previous()
                 })
             //exit btn
             setItem(
@@ -90,64 +101,70 @@ object Shop : BaseCommand() {
                 .asGuiItem { shopUI(player, 4) }
             )
 
-            val materialsToAdd: List<Material> = when (filter) {
+            val materialsToAdd: MutableList<Pair<Material, Double>> = when (filter) {
                 1 -> {
-                    val result = mutableListOf<Material>()
+                    val result = mutableListOf<Pair<Material, Double>>()
                     for (material in Material.values()) {
-                        if (material.isEdible && material.getShopPrice() > 0)
-                            result.add(material)
+                        val price = material.getShopPrice()
+                        if (material.isEdible && price > 0)
+                            result.add(material to price)
                     }
-                    result.toList()
+                    result
                 }
                 2 -> {
-                    val result = mutableListOf<Material>()
+                    val result = mutableListOf<Pair<Material, Double>>()
                     for (material in Material.values()) {
-                        if (material.isTool() && material.getShopPrice() > 0)
-                            result.add(material)
+                        val price = material.getShopPrice()
+                        if (material.isTool() && price > 0)
+                            result.add(material to price)
                     }
-                    result.toList()
+                    result
                 }
                 3 -> {
-                    val result = mutableListOf<Material>()
+                    val result = mutableListOf<Pair<Material, Double>>()
                     for (material in Material.values()) {
-                        if (material.isTransportation() && material.getShopPrice() > 0)
-                            result.add(material)
+                        val price = material.getShopPrice()
+                        if (material.isTransportation() && price > 0)
+                            result.add(material to price)
                     }
-                    result.toList()
+                    result
                 }
                 4 -> {
-                    val result = mutableListOf<Material>()
+                    val result = mutableListOf<Pair<Material, Double>>()
                     for (material in Material.values()) {
-                        if (material.isRecord && material.getShopPrice() > 0)
-                            result.add(material)
+                        val price = material.getShopPrice()
+                        if (material.isRecord && price > 0)
+                            result.add(material to price)
                     }
-                    result.toList()
+                    result
                 }
                 else -> {
-                    val result = mutableListOf<Material>()
+                    val result = mutableListOf<Pair<Material, Double>>()
                     for (material in Material.values()) {
-                        if (material.getShopPrice() > 0)
-                            result.add(material)
+                        val price = material.getShopPrice()
+                        if (price > 0)
+                            result.add(material to price)
                     }
-                    result.toList()
+                    result
                 }
             }
 
-            for (material in materialsToAdd) {
-                addItem(ItemBuilder.from(material)
-                    .setLore("&aBuy price: &f${material.getShopPrice()}&a$".colorize())
+            for (shopItems in materialsToAdd) {
+                addItem(ItemBuilder.from(shopItems.first)
+                    .setLore("&aBuy price: &f${shopItems.second}&a$".colorize())
                     .addItemFlags(*ItemFlag.values())
                     .asGuiItem {
-                        buyUI(player, this, material)
+                        buyUI(player, this, shopItems.first)
                     })
             }
             filler.fillBottom(ItemBuilder.from(Material.GRAY_STAINED_GLASS_PANE).setName(" ").asGuiItem())
             open(player)
         }
+        shopUICache.put(player to filter, shopUI)
+
     }
 
     private fun buyUI(player: Player, shopUI: PaginatedGui, material: Material) {
-
         Gui(1, "<g:#00bdff:#0009ff>Buy ${material.toNiceString()}".colorize()).run {
             setDefaultClickAction { it.isCancelled = true }
 

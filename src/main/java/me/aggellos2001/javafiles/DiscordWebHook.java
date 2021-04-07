@@ -2,7 +2,6 @@ package me.aggellos2001.javafiles;
 
 import co.aikar.taskchain.TaskChain;
 import co.aikar.taskchain.TaskChainFactory;
-import org.bukkit.plugin.java.JavaPlugin;
 
 import java.awt.*;
 import java.io.IOException;
@@ -43,7 +42,7 @@ public class DiscordWebHook {
 	 *
 	 * @param url The webhook URL obtained in Discord
 	 */
-	public DiscordWebHook(final String url,TaskChainFactory factory) {
+	public DiscordWebHook(final String url, TaskChainFactory factory) {
 		this.url = url;
 		this.chainFactory = factory;
 		//mc related fields
@@ -91,7 +90,7 @@ public class DiscordWebHook {
 	 * @return TaskChain that must be executed by using {@link TaskChain#execute()}
 	 * @see <a href="https://github.com/aikar/TaskChain">TaskChain Github</a><br>
 	 */
-	public TaskChain<Object> createHTTPChain() throws IOException {
+	public TaskChain<Object> createHTTPChain() throws IllegalArgumentException {
 		if (this.content == null && this.embeds.isEmpty()) {
 			throw new IllegalArgumentException("Set content or add at least one EmbedObject");
 		}

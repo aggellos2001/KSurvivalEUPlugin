@@ -1,7 +1,8 @@
 package me.aggellos2001.ksurvivaleuplugin.listeners
 
 import me.aggellos2001.ksurvivaleuplugin.hooks.LuckPermsHookUtil.getRankPrefix
-import me.aggellos2001.ksurvivaleuplugin.utils.colorizeToComponent
+import me.aggellos2001.ksurvivaleuplugin.utils.sendColorizedMessage
+import org.bukkit.Bukkit
 import org.bukkit.event.EventHandler
 import org.bukkit.event.Listener
 import org.bukkit.event.entity.EntityDamageEvent
@@ -21,7 +22,7 @@ object DeathMessage : Listener {
         val defaultMessage = "&6[&bSurvivalEU-&r&c&lDeath&r&6] $deadPlayerRankFormatted died!"
 
         if (lastDamageCause == null) {
-            e.deathMessage(defaultMessage.colorizeToComponent())
+            Bukkit.getServer().sendColorizedMessage(defaultMessage, false)
             return
         }
 
@@ -161,7 +162,8 @@ object DeathMessage : Listener {
             EntityDamageEvent.DamageCause.CRAMMING -> "wanted to fit into one block with many others but failed!"
             EntityDamageEvent.DamageCause.DRYOUT -> defaultMessage
         }
-        e.deathMessage("&6[&bSurvivalEU-&r&c&lDeath&r&6] $deadPlayerRankFormatted $deathMessage".colorizeToComponent())
+        Bukkit.getServer()
+            .sendColorizedMessage("&6[&bSurvivalEU-&r&c&lDeath&r&6] $deadPlayerRankFormatted $deathMessage", false)
 
     }
 }

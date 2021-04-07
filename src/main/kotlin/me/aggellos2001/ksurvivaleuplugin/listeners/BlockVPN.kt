@@ -2,7 +2,6 @@ package me.aggellos2001.ksurvivaleuplugin.listeners
 
 import com.github.benmanes.caffeine.cache.Caffeine
 import com.github.benmanes.caffeine.cache.Scheduler
-import com.google.common.cache.CacheBuilder
 import me.aggellos2001.ksurvivaleuplugin.persistentdata.pluginConfig
 import me.aggellos2001.ksurvivaleuplugin.plugin.pluginInstance
 import me.aggellos2001.ksurvivaleuplugin.utils.PCDetection
@@ -11,14 +10,15 @@ import org.bukkit.event.EventHandler
 import org.bukkit.event.Listener
 import org.bukkit.event.player.AsyncPlayerPreLoginEvent
 import java.io.IOException
-import java.util.concurrent.TimeUnit
+import kotlin.time.hours
+import kotlin.time.toJavaDuration
 
 
 object BlockVPN : Listener {
 
     private val detectionCache = Caffeine.newBuilder()
         .scheduler(Scheduler.systemScheduler())
-        .expireAfterAccess(1, TimeUnit.HOURS).build<String, PCDetection>()
+        .expireAfterAccess(1.hours.toJavaDuration()).build<String, PCDetection>()
 
     fun getFromCache(hostAddress: String): PCDetection? = detectionCache.getIfPresent(hostAddress)
     fun clearHostName(hostAddress: String) = detectionCache.invalidate(hostAddress)
@@ -45,7 +45,10 @@ object BlockVPN : Listener {
 
         if (detection.status == "ok" || detection.status == "warning") {
             if (detection.risk > 67 || (detection.proxy == "yes" && detection.type == "vpn"))
-                e.disallow(AsyncPlayerPreLoginEvent.Result.KICK_OTHER, String.format(kickMessage,hostAddress).colorizeToComponent())
+                e.disallow(
+                    AsyncPlayerPreLoginEvent.Result.KICK_OTHER,
+                    String.format(kickMessage, hostAddress).colorizeToComponent()
+                )
         } else
             pluginInstance.logger.warning("VPN/Proxy finder API call failed for player ${e.name}!")
 

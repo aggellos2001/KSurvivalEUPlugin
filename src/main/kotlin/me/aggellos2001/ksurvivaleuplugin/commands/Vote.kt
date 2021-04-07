@@ -40,7 +40,10 @@ object Vote : BaseCommand() {
                 .uri(URI("https://minecraft-mp.com/api/?object=votes&element=claim&key=$key&username=${player.name}"))
                 .version(HttpClient.Version.HTTP_2)
                 .timeout(20.seconds.toJavaDuration())
-                .header("User-Agent","Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.11 (KHTML, like Gecko) Chrome/23.0.1271.95 Safari/537.11")
+                .header(
+                    "User-Agent",
+                    "Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.11 (KHTML, like Gecko) Chrome/23.0.1271.95 Safari/537.11"
+                )
                 .GET()
                 .build()
 

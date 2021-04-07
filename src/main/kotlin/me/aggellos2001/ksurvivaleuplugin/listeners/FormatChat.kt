@@ -8,7 +8,6 @@ import me.aggellos2001.ksurvivaleuplugin.utils.*
 import net.kyori.adventure.text.Component
 import org.bukkit.entity.Player
 import org.bukkit.event.EventHandler
-import org.bukkit.event.EventPriority
 import org.bukkit.event.Listener
 import kotlin.time.seconds
 

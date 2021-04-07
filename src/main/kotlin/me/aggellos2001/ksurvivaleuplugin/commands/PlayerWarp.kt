@@ -3,6 +3,8 @@ package me.aggellos2001.ksurvivaleuplugin.commands
 import co.aikar.commands.BaseCommand
 import co.aikar.commands.ConditionFailedException
 import co.aikar.commands.annotation.*
+import com.github.benmanes.caffeine.cache.Caffeine
+import com.github.benmanes.caffeine.cache.Scheduler
 import me.aggellos2001.ksurvivaleuplugin.persistentdata.PlayerWarpData
 import me.aggellos2001.ksurvivaleuplugin.persistentdata.PlayerWarpDataClass
 import me.aggellos2001.ksurvivaleuplugin.utils.*
@@ -13,15 +15,24 @@ import org.bukkit.Location
 import org.bukkit.Material
 import org.bukkit.entity.Player
 import java.util.*
+import kotlin.time.hours
+import kotlin.time.toJavaDuration
 
 @CommandAlias("playerwarp|playerwarps|pwarp|pwarps")
-@Conditions("cooldown:time=3,name=PlayerWarp")
 object PlayerWarp : BaseCommand() {
+
+    private val pWarpUICache = Caffeine.newBuilder().weakKeys().scheduler(Scheduler.systemScheduler())
+        .expireAfterWrite(1.hours.toJavaDuration()).build<Player, PaginatedGui>()
 
     @Default
     fun playerWarpUI(player: Player) {
 
-        val pWarpUI = PaginatedGui(6, 45, "<#0230fa>Player Warps".colorize()).apply {
+        var pWarpUI = pWarpUICache.getIfPresent(player)
+        if (pWarpUI != null) {
+            pWarpUI.open(player)
+            return
+        }
+        pWarpUI = PaginatedGui(6, 45, "<#0230fa>Player Warps".colorize()).apply {
             setDefaultClickAction {
                 it.isCancelled = true
             }
@@ -99,12 +110,16 @@ object PlayerWarp : BaseCommand() {
             }
             open(player)
         }
+        pWarpUICache.put(player, pWarpUI)
     }
 
     @Subcommand("add")
+    @Conditions("cooldown:time=5,name=PlayerWarp")
     fun onAddWarpCommand(player: Player, @Single warpName: String) {
 
-        if (warpName.length > 20) {
+        val warpNameLowerCaseFiltered = warpName.toLowerCase().replace(Regex("[^A-Za-z0-9]"), "")
+
+        if (warpNameLowerCaseFiltered.length > 20) {
             throw ConditionFailedException("Warp name must be up to 20 characters!")
         }
 
@@ -114,22 +129,25 @@ object PlayerWarp : BaseCommand() {
                 warpsOwned++
         }
 
-        if (warpsOwned == 2) {
+        if (warpsOwned == 3) {
             throw ConditionFailedException("You cannot set more than $warpsOwned warps!")
         }
 
         if (!player.location.isSafe())
             throw ConditionFailedException("Unsafe location! Disabled blocks: &ePressure Plate,Leaves,Lava,Water,Magma Block")
 
-        if (PlayerWarpData.playerWarpList.stream().anyMatch { it.warpName == warpName })
-            throw ConditionFailedException("Warp &e${warpName}&c already exists!")
+        if (PlayerWarpData.playerWarpList.stream().anyMatch { it.warpName == warpNameLowerCaseFiltered })
+            throw ConditionFailedException("Warp &e${warpNameLowerCaseFiltered}&c already exists!")
 
-        PlayerWarpData.addWarp(player, warpName.toLowerCase())
 
-        player.sendColorizedMessage("&aWarp ${warpName.toLowerCase()} created!")
+        PlayerWarpData.addWarp(player, warpNameLowerCaseFiltered)
+
+        player.sendColorizedMessage("&aWarp $warpNameLowerCaseFiltered created!")
+        pWarpUICache.invalidateAll()
     }
 
     @Subcommand("delete")
+    @Conditions("cooldown:time=5,name=PlayerWarp")
     fun onDeleteWarpCommand(player: Player, @Single warpName: String) {
 
         for (playerWarp in PlayerWarpData.playerWarpList) {
@@ -138,6 +156,7 @@ object PlayerWarp : BaseCommand() {
                 if (warpOwner == player || player.isOp) {
                     PlayerWarpData.deleteWarp(player, playerWarp)
                     player.sendColorizedMessage("&aRemoved warp &e${playerWarp.warpName}&a successfully!")
+                    pWarpUICache.invalidateAll()
                 } else {
                     player.sendColorizedMessage("&cYou do not own this warp!")
                 }

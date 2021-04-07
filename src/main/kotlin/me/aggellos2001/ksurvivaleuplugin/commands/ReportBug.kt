@@ -47,7 +47,7 @@ object ReportBug : BaseCommand() {
                     player.sendColorizedMessage("&aBug report sent successfully! Thank you :D! ")
                 else
                     player.sendColorizedMessage("&cBug report failed! Try again in a few minutes!!!")
-                player.setCoolDown("BugReport",60.seconds)
+                player.setCoolDown("BugReport", 60.seconds)
             }.execute()
         } catch (t: Throwable) {
             t.printStackTrace()

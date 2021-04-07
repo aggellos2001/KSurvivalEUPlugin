@@ -34,7 +34,7 @@ object PlayerFinder : BaseCommand() {
                 player.sendColorizedMessage("&aFound ${it.size} players!")
                 it.forEachIndexed { index, playerName ->
                     val i = index + 1
-                    player.sendColorizedMessage("&e${i}. $playerName",false)
+                    player.sendColorizedMessage("&e${i}. $playerName", false)
                 }
             }
         }.execute()
@@ -59,11 +59,12 @@ object PlayerFinder : BaseCommand() {
                 player.sendColorizedMessage("&aFound ${it.size} players!")
                 it.forEachIndexed { index, playerName ->
                     val i = index + 1
-                    player.sendColorizedMessage("&e${i}. $playerName",false)
+                    player.sendColorizedMessage("&e${i}. $playerName", false)
                 }
             }
         }.execute()
     }
+
     @Subcommand("endsWith")
     fun onPlayerFindEndsWith(player: Player, @Single name: String) {
         val chain = CHAIN_FACTORY.newChain<Any>()
@@ -83,7 +84,7 @@ object PlayerFinder : BaseCommand() {
                 player.sendColorizedMessage("&aFound ${it.size} players!")
                 it.forEachIndexed { index, playerName ->
                     val i = index + 1
-                    player.sendColorizedMessage("&e${i}. $playerName",false)
+                    player.sendColorizedMessage("&e${i}. $playerName", false)
                 }
             }
         }.execute()

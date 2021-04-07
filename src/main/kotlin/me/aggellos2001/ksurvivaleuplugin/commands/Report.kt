@@ -55,7 +55,7 @@ object Report : BaseCommand() {
                     playerReporting.sendColorizedMessage("&aReported player &e${playerGettingReported.player.name}&a successfully!")
                 else
                     playerReporting.sendColorizedMessage("&cReport failed! Try again in a few minutes!!!")
-                playerReporting.setCoolDown("Report",60.seconds)
+                playerReporting.setCoolDown("Report", 60.seconds)
             }.execute()
         } catch (t: Throwable) {
             t.printStackTrace()

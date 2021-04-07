@@ -10,7 +10,6 @@ import me.aggellos2001.ksurvivaleuplugin.plugin.pluginInstance
 import me.aggellos2001.ksurvivaleuplugin.utils.colorize
 import me.aggellos2001.ksurvivaleuplugin.utils.colorizeToComponent
 import me.aggellos2001.ksurvivaleuplugin.utils.sendColorizedMessage
-import me.mattstudios.mfmsg.bukkit.BukkitMessage
 import org.bukkit.NamespacedKey
 import org.bukkit.block.Sign
 import org.bukkit.entity.Player

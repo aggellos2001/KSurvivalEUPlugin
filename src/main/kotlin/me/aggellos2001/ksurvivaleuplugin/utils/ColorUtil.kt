@@ -4,9 +4,10 @@ import me.mattstudios.mfmsg.base.MessageOptions
 import me.mattstudios.mfmsg.base.internal.Format
 import me.mattstudios.mfmsg.bukkit.BukkitMessage
 import net.kyori.adventure.text.Component
+import org.bukkit.ChatColor
 import org.bukkit.Server
 import org.bukkit.command.CommandSender
-import org.bukkit.entity.Player
+import org.bukkit.plugin.java.JavaPlugin
 import java.util.function.Predicate
 
 private val messageParser = BukkitMessage.create(MessageOptions.builder().removeFormat(Format.ITALIC).build())
@@ -22,7 +23,11 @@ fun String.colorize(addPrefix: Boolean = false): String {
     else messageParser.parse(this).toString()
 }
 
+fun String.stripColors() = ChatColor.stripColor(this)!!
+
 fun Component.colorize(): Component = this.serializeToString().colorizeToComponent()
+
+fun Component.stripColors(): Component = this.serializeToString().stripColors().deserializeToComponent()
 
 fun CommandSender.sendColorizedMessage(message: String, addPrefix: Boolean = true) {
     this.sendMessage(message.colorizeToComponent(addPrefix))
@@ -30,6 +35,10 @@ fun CommandSender.sendColorizedMessage(message: String, addPrefix: Boolean = tru
 
 fun Server.sendColorizedMessage(message: String, addPrefix: Boolean = true) {
     this.sendMessage(message.colorizeToComponent(addPrefix))
+}
+
+fun JavaPlugin.logInGame(message: String, addPrefix: Boolean = true) {
+    this.server.sendColorizedMessage(message, addPrefix)
 }
 
 fun MutableCollection<out CommandSender>.sendColorizedMessage(
@@ -42,5 +51,6 @@ fun MutableCollection<out CommandSender>.sendColorizedMessage(
             it.sendColorizedMessage(message, addPrefix)
     }
 }
+
 
 

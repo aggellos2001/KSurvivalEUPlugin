@@ -67,7 +67,6 @@ object Donation : BaseCommand() {
     fun givePotions(player: Player) {
         if (!player.hasDonated()) return
 
-        //TODO check if pvp is on here
         if (playersWithDonationEffectsOn.any { it.get() == player }) {
             for (activePotionEffect in player.activePotionEffects) {
                 player.removePotionEffect(activePotionEffect.type)
@@ -85,4 +84,6 @@ object Donation : BaseCommand() {
         playersWithDonationEffectsOn.add(player.wrapToWeakReference())
         player.sendColorizedMessage("&aDonation effects enabled! Thank you for your support!")
     }
+
+    fun hasDonationEffects(player: Player): Boolean = playersWithDonationEffectsOn.any { it.get() == player }
 }

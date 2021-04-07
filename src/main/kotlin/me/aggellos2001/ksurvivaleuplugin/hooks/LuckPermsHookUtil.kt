@@ -26,9 +26,9 @@ object LuckPermsHookUtil {
             ?.toBoolean() ?: false
     }
 
-    fun Player.getRankPrefix(): String {
+    fun Player.getRankPrefix(showMobile: Boolean = true): String {
         val prefix = LUCKPERMS_API.userManager.getUser(this.uniqueId)?.cachedData?.metaData?.prefix ?: "&aMember"
-        return if (mobileUsers.any { it.get() == player })
+        return if (showMobile && mobileUsers.any { it.get() == player })
             "&b✆&r $prefix"
         else
             prefix

@@ -75,7 +75,7 @@ fun Player.getCoolDown(key: String): Pair<Boolean, Duration> {
 
     if (this.hasPermission("seu.cooldown")) return noCooldown
     val playerCooldowns = coolDownCache.getIfPresent(this.name) ?: return noCooldown
-    val commandCooldown = playerCooldowns.getOrDefault(key,null) ?: return noCooldown
+    val commandCooldown = playerCooldowns.getOrDefault(key, null) ?: return noCooldown
 
     val currentTime = System.currentTimeMillis().toDuration(TimeUnit.MILLISECONDS)
     return if (currentTime < commandCooldown)

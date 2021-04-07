@@ -7,8 +7,8 @@ import co.aikar.commands.annotation.Default
 import me.aggellos2001.ksurvivaleuplugin.persistentdata.getPluginPlayerData
 import me.aggellos2001.ksurvivaleuplugin.persistentdata.setPluginPlayerData
 import me.aggellos2001.ksurvivaleuplugin.utils.colorize
-import me.aggellos2001.ksurvivaleuplugin.utils.getNameBeatify
 import me.aggellos2001.ksurvivaleuplugin.utils.sendColorizedMessage
+import me.aggellos2001.ksurvivaleuplugin.utils.toNiceString
 import me.mattstudios.mfgui.gui.components.util.ItemBuilder
 import me.mattstudios.mfgui.gui.guis.Gui
 import me.mattstudios.mfgui.gui.guis.GuiItem
@@ -44,6 +44,10 @@ object Settings : BaseCommand() {
 
             }
             addSlotAction(4) {
+                if (Donation.hasDonationEffects(player)) {
+                    player.sendColorizedMessage("&cYou cannot toggle PvP while donation potions are enabled!")
+                    return@addSlotAction
+                }
                 val pvp = data.pvp
                 data.pvp = !pvp
                 player.setPluginPlayerData(data)
@@ -57,7 +61,7 @@ object Settings : BaseCommand() {
                 .glow(true)
                 .setLore(
                     ("&${data.chatColor}" + ChatColor.getByChar(player.getPluginPlayerData().chatColor)
-                        ?.getNameBeatify()).colorize()
+                        ?.toNiceString()).colorize()
                 ).asGuiItem {
                     colorUI(player, this)
                 })
@@ -69,7 +73,7 @@ object Settings : BaseCommand() {
 
     private fun colorUI(player: Player, settingsUI: Gui) {
 
-        val colorUI = Gui(2, "<r:0.8:1.0>Chat Color Menu".colorize()).apply {
+        Gui(2, "<r:0.8:1.0>Chat Color Menu".colorize()).run {
             setDefaultClickAction {
                 it.isCancelled = true
             }
@@ -80,7 +84,7 @@ object Settings : BaseCommand() {
             //adding colors to UI
             for (color in ChatColor.values()) {
                 if (!color.isColor) continue
-                val menuName = "&${color.char}${color.getNameBeatify()}".colorize()
+                val menuName = "&${color.char}${color.toNiceString()}".colorize()
                 addItem(ItemBuilder.from(getDyeFromColor(color))
                     .setName(menuName)
                     .asGuiItem {

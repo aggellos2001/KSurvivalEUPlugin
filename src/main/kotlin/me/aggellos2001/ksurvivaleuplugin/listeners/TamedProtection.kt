@@ -23,7 +23,7 @@ object TamedProtection : Listener {
         if (attacker is Player) {
             if (attacker.isOp) return
             val owner = defender.owner
-            if (defender.owner != attacker && owner!= null) {
+            if (defender.owner != attacker && owner != null) {
                 attacker.sendColorizedMessage("&cYou cannot harm this animal. It is tamed by ${owner.name}!")
                 e.isCancelled = true
             }
@@ -31,7 +31,7 @@ object TamedProtection : Listener {
 
         if (attacker is Projectile) {
             val owner = defender.owner
-            if (attacker.shooter != defender.owner && owner != null ) {
+            if (attacker.shooter != defender.owner && owner != null) {
                 attacker.sendColorizedMessage("&cYou cannot harm this animal. It is tamed by ${owner.name}!")
                 e.isCancelled = true
             }
