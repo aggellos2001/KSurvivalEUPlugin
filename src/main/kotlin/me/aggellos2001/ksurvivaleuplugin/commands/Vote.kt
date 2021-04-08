@@ -75,7 +75,7 @@ object Vote : BaseCommand() {
     }
 
     @Subcommand("check")
-    @Conditions("cooldown:time=1,name=Vote")
+    @Conditions("cooldown:time=120,name=Vote")
     @CommandCompletion("@players @nothing")
     fun onVoteCheck(player: Player, @Optional onlinePlayer: OnlinePlayer?) {
         val chain: TaskChain<Any> = CHAIN_FACTORY.newChain()
@@ -136,12 +136,8 @@ object Vote : BaseCommand() {
                         }
                         player.sendColorizedMessage("&eSome items did not fit on your inventory and were dropped on the ground!")
                     }
-                    player.sendColorizedMessage(
-                        """
-                        &aYou got 500 claim blocks, 2 phantom membranes and 300${'$'} for your vote!
-                        &aYou got your reward! Thank you for the support!
-                    """.trimIndent()
-                    )
+                    player.sendColorizedMessage("&aYou got 500 claim blocks, 2 phantom membranes and 300$ for your vote!")
+                    Bukkit.getServer().sendColorizedMessage("&aPlayer &6${player.name}&a voted for the server!")
                 }
 
             }.execute()

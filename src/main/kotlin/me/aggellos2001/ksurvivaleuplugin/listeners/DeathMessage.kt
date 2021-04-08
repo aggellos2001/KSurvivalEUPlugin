@@ -40,7 +40,7 @@ object DeathMessage : Listener {
                     else
                         "got killed by $killerRankFormatted!"
                 } else
-                    defaultMessage
+                    "died!"
             }
             EntityDamageEvent.DamageCause.PROJECTILE -> {
                 if (killer != null) {
@@ -49,7 +49,7 @@ object DeathMessage : Listener {
                     else
                         "got sniped by $killerRankFormatted!"
                 } else
-                    defaultMessage
+                    "died!"
             }
             EntityDamageEvent.DamageCause.SUFFOCATION -> {
                 if (randInt == 0)
@@ -76,7 +76,7 @@ object DeathMessage : Listener {
                     "burned as he tried to save himself!"
             }
             EntityDamageEvent.DamageCause.MELTING, EntityDamageEvent.DamageCause.CUSTOM -> {
-                defaultMessage
+                "died!"
             }
             EntityDamageEvent.DamageCause.LAVA -> {
                 when (Random.nextInt(3)) {
@@ -160,7 +160,7 @@ object DeathMessage : Listener {
             EntityDamageEvent.DamageCause.FLY_INTO_WALL -> "crashed into the wall too hard!"
             EntityDamageEvent.DamageCause.HOT_FLOOR -> "didn't notice that magma blocks are red hot!"
             EntityDamageEvent.DamageCause.CRAMMING -> "wanted to fit into one block with many others but failed!"
-            EntityDamageEvent.DamageCause.DRYOUT -> defaultMessage
+            EntityDamageEvent.DamageCause.DRYOUT -> "died!"
         }
         Bukkit.getServer()
             .sendColorizedMessage("&6[&bSurvivalEU-&r&c&lDeath&r&6] $deadPlayerRankFormatted $deathMessage", false)
