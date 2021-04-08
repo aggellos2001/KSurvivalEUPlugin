@@ -77,7 +77,7 @@ object PlayerWarpData {
      *
      * @throws [IllegalStateException] if the [playerWarp] does not exist in the disk
      */
-    fun deleteWarp(player: Player, playerWarp: PlayerWarpDataClass) {
+    fun deleteWarp(playerWarp: PlayerWarpDataClass) {
         val file = File(warpDirectory, "${playerWarp.warpName}.json")
         if (!file.exists())
             throw IllegalStateException("Trying to delete a warp that doesn't exist!")

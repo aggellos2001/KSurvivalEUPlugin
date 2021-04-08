@@ -106,13 +106,13 @@ object LockChestListeners : Listener {
 
     @EventHandler(ignoreCancelled = true)
     fun preventHopperSteal(e: InventoryMoveItemEvent) {
-        val block = e.source.location?.block
+        val block = e.source.location?.block ?: return
         var chest = lockedChestCache.getIfPresent(block)
         if (chest != null) {
             e.isCancelled = true
             return
         }
-        chest = ChestLockUtil(block?.state as? Chest ?: return)
+        chest = ChestLockUtil(block.state as? Chest ?: return)
         if (chest.chestOwners().isNotEmpty()) {
             //this will run only when block is not in cache and chest is locked
             e.isCancelled = true
