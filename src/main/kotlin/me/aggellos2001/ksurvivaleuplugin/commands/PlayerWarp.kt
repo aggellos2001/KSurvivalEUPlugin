@@ -156,7 +156,7 @@ object PlayerWarp : BaseCommand() {
             val warpOwner = Bukkit.getOfflinePlayer(UUID.fromString(playerWarp.playerUUID))
             if (playerWarp.warpName.equals(warpName, true)) {
                 if (warpOwner == player || player.isOp) {
-                    PlayerWarpData.deleteWarp(player, playerWarp)
+                    PlayerWarpData.deleteWarp(playerWarp)
                     player.sendColorizedMessage("&aRemoved warp &e${playerWarp.warpName}&a successfully!")
                     pWarpUICache.invalidateAll()
                 } else {
