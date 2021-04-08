@@ -34,6 +34,9 @@ object LuckPermsHookUtil {
             prefix
     }
 
+    fun Player.getRankSuffix(): String =
+        LUCKPERMS_API.userManager.getUser(this.uniqueId)?.cachedData?.metaData?.suffix ?: ""
+
     fun getStaffOnline(): Set<Player> {
         return mutableSetOf<Player>().apply {
             for (onlinePlayer in Bukkit.getOnlinePlayers()) {

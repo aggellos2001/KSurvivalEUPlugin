@@ -4,7 +4,6 @@ import co.aikar.taskchain.TaskChain;
 import co.aikar.taskchain.TaskChainFactory;
 
 import java.awt.*;
-import java.io.IOException;
 import java.lang.reflect.Array;
 import java.net.URI;
 import java.net.http.HttpClient;
@@ -416,7 +415,7 @@ public class DiscordWebHook {
 				} else if (val instanceof Boolean) {
 					builder.append(val);
 				} else if (val instanceof JSONObject) {
-					builder.append(val.toString());
+					builder.append(val);
 				} else if (val.getClass().isArray()) {
 					builder.append("[");
 					final int len = Array.getLength(val);

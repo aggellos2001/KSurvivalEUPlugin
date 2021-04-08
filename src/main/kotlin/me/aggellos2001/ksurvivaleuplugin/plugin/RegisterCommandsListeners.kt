@@ -39,6 +39,7 @@ fun registerCommandsAndEvents() {
         registerCommand(PlayerFinder)
         registerCommand(ReportBug)
         registerCommand(LockChest)
+        registerCommand(PlayTime)
     }
 
     pluginInstance.run {

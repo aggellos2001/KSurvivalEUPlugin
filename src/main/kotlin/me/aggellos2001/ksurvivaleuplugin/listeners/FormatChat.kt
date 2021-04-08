@@ -3,6 +3,7 @@ package me.aggellos2001.ksurvivaleuplugin.listeners
 import io.papermc.paper.chat.ChatComposer
 import io.papermc.paper.event.player.AsyncChatEvent
 import me.aggellos2001.ksurvivaleuplugin.hooks.LuckPermsHookUtil.getRankPrefix
+import me.aggellos2001.ksurvivaleuplugin.hooks.LuckPermsHookUtil.getRankSuffix
 import me.aggellos2001.ksurvivaleuplugin.persistentdata.getPluginPlayerData
 import me.aggellos2001.ksurvivaleuplugin.utils.*
 import net.kyori.adventure.text.Component
@@ -16,9 +17,13 @@ object FormatChat : Listener, ChatComposer {
 
     override fun composeChat(source: Player, displayName: Component, message: Component): Component {
         val display = Component.text()
-        val rankPrefix = source.getRankPrefix()
+        val rankPrefix = source.getRankPrefix() + " "
+        val rankSuffix =
+            if (source.getRankSuffix() != "") source.getRankSuffix() + " "
+            else source.getRankSuffix()
         val data = source.getPluginPlayerData()
-        return display.append(rankPrefix.colorizeToComponent()).append(" ".deserializeToComponent()).append(displayName)
+        return display.append(rankSuffix.colorizeToComponent())
+            .append(rankPrefix.colorizeToComponent()).append(displayName)
             .append(": ".deserializeToComponent())
             .append("&${data.chatColor}${message.serializeToString()}".colorizeToComponent())
             .build()
