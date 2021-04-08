@@ -78,7 +78,7 @@ fun Player.getPluginPlayerData(default: Boolean = false): PluginPlayerData =
     if (default)
         PluginPlayerData()
     else
-        pluginPlayerDataCache.getOrElse(this, { PluginPlayerDataHandler.loadDataFromFile(this) })
+        pluginPlayerDataCache.getOrElse(this) { PluginPlayerDataHandler.loadDataFromFile(this) }
 
 
 /**

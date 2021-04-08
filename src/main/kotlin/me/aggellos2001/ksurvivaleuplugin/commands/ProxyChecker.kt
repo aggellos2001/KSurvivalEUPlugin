@@ -25,8 +25,10 @@ object ProxyChecker : BaseCommand() {
 
     @Subcommand("clearIP")
     fun onCleanIPCommand(player: Player, @Single hostName: String) {
-        if (BlockVPN.getFromCache(hostName) != null) {
-            BlockVPN.clearHostName(hostName)
-        }
+        val result = BlockVPN.clearHostName(hostName)
+        if (result != null)
+            player.sendColorizedMessage("&aSuccessfully cleared hostname &e$hostName&a from the cache!")
+        else
+            player.sendColorizedMessage("&cHostname &e$hostName&c not found in the cache!")
     }
 }

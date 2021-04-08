@@ -17,20 +17,21 @@ import org.bukkit.Material
 import org.bukkit.entity.Player
 import org.bukkit.inventory.ItemFlag
 import org.bukkit.inventory.ItemStack
-import kotlin.time.minutes
+import kotlin.time.seconds
 import kotlin.time.toJavaDuration
 
 @CommandAlias("shop")
 object Shop : BaseCommand() {
 
     private val shopUICache =
-        Caffeine.newBuilder().scheduler(Scheduler.systemScheduler()).expireAfterAccess(30.minutes.toJavaDuration())
-            .build<Pair<Player, Int>, PaginatedGui>()
+        Caffeine.newBuilder().scheduler(Scheduler.systemScheduler()).expireAfterAccess(15.seconds.toJavaDuration())
+            .build<Player, HashMap<Int, PaginatedGui>>()
 
     @Default
     fun shopUI(player: Player, @Default("0") filter: Int) {
-        var shopUI = shopUICache.getIfPresent(player to filter)
-        if (shopUI != null) {
+        val shopUICacheValue = shopUICache.getIfPresent(player)
+        var shopUI = shopUICacheValue?.get(filter)
+        if (shopUICacheValue != null && shopUI != null) {
             shopUI.open(player)
             return
         }
@@ -160,8 +161,13 @@ object Shop : BaseCommand() {
             filler.fillBottom(ItemBuilder.from(Material.GRAY_STAINED_GLASS_PANE).setName(" ").asGuiItem())
             open(player)
         }
-        shopUICache.put(player to filter, shopUI)
-
+        if (shopUICache.getIfPresent(player) == null) {
+            shopUICache.put(player, hashMapOf(filter to shopUI))
+        } else {
+            val hashMap = shopUICache.getIfPresent(player)!!
+            hashMap[filter] = shopUI
+            shopUICache.put(player, hashMap)
+        }
     }
 
     private fun buyUI(player: Player, shopUI: PaginatedGui, material: Material) {

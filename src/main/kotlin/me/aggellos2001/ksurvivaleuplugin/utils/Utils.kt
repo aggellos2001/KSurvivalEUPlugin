@@ -70,7 +70,7 @@ fun CommandSender.sendHelpMessage(command: BaseCommand, message: String) {
     )
 }
 
-inline fun JavaPlugin.measureBlockTime(block: () -> Unit) {
+inline fun JavaPlugin.measureBlockTime(crossinline block: () -> Unit) {
     val start = System.nanoTime()
     block()
     val totalTime = System.nanoTime() - start

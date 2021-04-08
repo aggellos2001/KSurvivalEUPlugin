@@ -1,7 +1,5 @@
 package me.aggellos2001.ksurvivaleuplugin.listeners
 
-import com.github.benmanes.caffeine.cache.Caffeine
-import com.github.benmanes.caffeine.cache.Scheduler
 import me.aggellos2001.ksurvivaleuplugin.persistentdata.pluginConfig
 import me.aggellos2001.ksurvivaleuplugin.plugin.pluginInstance
 import me.aggellos2001.ksurvivaleuplugin.utils.PCDetection
@@ -10,18 +8,14 @@ import org.bukkit.event.EventHandler
 import org.bukkit.event.Listener
 import org.bukkit.event.player.AsyncPlayerPreLoginEvent
 import java.io.IOException
-import kotlin.time.hours
-import kotlin.time.toJavaDuration
 
 
 object BlockVPN : Listener {
 
-    private val detectionCache = Caffeine.newBuilder()
-        .scheduler(Scheduler.systemScheduler())
-        .expireAfterAccess(1.hours.toJavaDuration()).build<String, PCDetection>()
+    private val detectionCache = HashMap<String, PCDetection>()
 
-    fun getFromCache(hostAddress: String): PCDetection? = detectionCache.getIfPresent(hostAddress)
-    fun clearHostName(hostAddress: String) = detectionCache.invalidate(hostAddress)
+    fun getFromCache(hostAddress: String): PCDetection? = detectionCache[hostAddress]
+    fun clearHostName(hostAddress: String): PCDetection? = detectionCache.remove(hostAddress)
 
     private val kickMessage: String =
         """
@@ -41,7 +35,7 @@ object BlockVPN : Listener {
     fun onLoginCheckForVPN(e: AsyncPlayerPreLoginEvent) {
 
         val hostAddress = e.address.hostAddress
-        val detection = detectionCache.getIfPresent(hostAddress) ?: getProxyCheckFromAPI(hostAddress)
+        val detection = detectionCache[hostAddress] ?: getProxyCheckFromAPI(hostAddress)
 
         if (detection.status == "ok" || detection.status == "warning") {
             if (detection.risk > 67 || (detection.proxy == "yes" && detection.type == "vpn"))
@@ -52,7 +46,7 @@ object BlockVPN : Listener {
         } else
             pluginInstance.logger.warning("VPN/Proxy finder API call failed for player ${e.name}!")
 
-        detectionCache.put(hostAddress, detection)
+        detectionCache[hostAddress] = detection
     }
 
     /**

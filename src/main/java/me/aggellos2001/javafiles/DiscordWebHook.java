@@ -435,5 +435,4 @@ public class DiscordWebHook {
 			return "\"" + string + "\"";
 		}
 	}
-
 }

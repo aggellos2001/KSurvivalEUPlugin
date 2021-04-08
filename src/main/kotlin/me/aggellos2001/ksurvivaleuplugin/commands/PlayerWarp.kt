@@ -18,18 +18,17 @@ import org.bukkit.Location
 import org.bukkit.Material
 import org.bukkit.entity.Player
 import java.util.*
-import kotlin.time.hours
+import kotlin.time.seconds
 import kotlin.time.toJavaDuration
 
 @CommandAlias("playerwarp|playerwarps|pwarp|pwarps")
 object PlayerWarp : BaseCommand() {
 
-    private val pWarpUICache = Caffeine.newBuilder().weakKeys().scheduler(Scheduler.systemScheduler())
-        .expireAfterWrite(1.hours.toJavaDuration()).build<Player, PaginatedGui>()
+    private val pWarpUICache = Caffeine.newBuilder().scheduler(Scheduler.systemScheduler())
+        .expireAfterAccess(15.seconds.toJavaDuration()).build<Player, PaginatedGui>()
 
     @Default
     fun playerWarpUI(player: Player) {
-
         var pWarpUI = pWarpUICache.getIfPresent(player)
         if (pWarpUI != null) {
             pWarpUI.open(player)
