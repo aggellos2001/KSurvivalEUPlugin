@@ -6,7 +6,7 @@ plugins {
     kotlin("jvm") version "1.4.31"
     id("com.github.ben-manes.versions") version ("0.38.0")
     id("org.jetbrains.dokka") version "1.4.30"
-    id("me.bristermitten.pdm") version "0.0.33"
+    id ("com.github.johnrengelman.shadow") version "6.1.0"
 }
 
 group = "me.aggellos2001.ksurvivaleuplugin"
@@ -37,15 +37,14 @@ dependencies {
     compileOnly("net.ess3:EssentialsX:2.17.2")
     compileOnly("net.coreprotect:coreprotect:19.5")
 
-    //We download dependencies at runtime using PDM library https://github.com/knightzmc/pdm
-    pdm("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
-    pdm("co.aikar:acf-paper:0.5.0-SNAPSHOT")
-    pdm("co.aikar:taskchain-bukkit:3.7.2")
-    pdm("me.mattstudios.utils:matt-framework-gui:2.0.3.3")
-    pdm("com.github.linkedin:URL-Detector:-SNAPSHOT")
-    pdm("me.mattstudios:mf-msg-bukkit:2.0.2")
-    pdm("com.google.code.gson:gson:2.8.6")
-    pdm("com.github.ben-manes.caffeine:caffeine:3.0.1")
+    implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
+    implementation("co.aikar:acf-paper:0.5.0-SNAPSHOT")
+    implementation("co.aikar:taskchain-bukkit:3.7.2")
+    implementation("me.mattstudios.utils:matt-framework-gui:2.0.3.3")
+    implementation("com.github.linkedin:URL-Detector:-SNAPSHOT")
+    implementation("me.mattstudios:mf-msg-bukkit:2.0.2")
+    implementation("com.google.code.gson:gson:2.8.6")
+    implementation("com.github.ben-manes.caffeine:caffeine:3.0.1")
 
 }
 
@@ -61,9 +60,16 @@ tasks.withType<KotlinCompile>().configureEach {
     }
 }
 
-tasks.withType<org.gradle.jvm.tasks.Jar>().configureEach {
+tasks.withType<com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar>().configureEach {
 
-    dependsOn(tasks.getByName("pdm"))
+    this.dependsOn("assemble")
+
+    relocate("kotlin","me.aggellos2001.kotlin")
+    relocate("co.aikar.commands","me.aggellos2001.acf")
+    relocate("co.aikar.locales","me.aggellos2001.locales")
+    relocate("co.aikar.taskchain","me.aggellos2001.taskchain")
+    relocate("co.aikar.mfgui","me.aggellos2001.mattlib")
+    relocate("co.aikar.mfmsg","me.aggellos2001.mfmsg")
 
     archiveFileName.set("KSurvivalEUPlugin-$projectVersion.jar")
     destinationDirectory.set(file("C:\\Users\\aggel\\Desktop\\Minecraft_Test_Servers\\Test_server\\plugins"))

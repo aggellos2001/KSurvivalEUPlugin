@@ -7,7 +7,6 @@ import me.aggellos2001.ksurvivaleuplugin.persistentdata.PlayerWarpData
 import me.aggellos2001.ksurvivaleuplugin.persistentdata.PluginConfigHandler
 import me.aggellos2001.ksurvivaleuplugin.persistentdata.PluginPlayerDataHandler
 import me.aggellos2001.ksurvivaleuplugin.utils.colorize
-import me.bristermitten.pdm.SpigotDependencyManager
 import net.coreprotect.CoreProtect
 import net.coreprotect.CoreProtectAPI
 import net.ess3.api.IEssentials
@@ -34,15 +33,7 @@ lateinit var pluginLogger: Logger
  */
 class KSurvivalEUPlugin : JavaPlugin() {
 
-    /**
-     * [SpigotDependencyManager] loads/downloads all dependencies at runtime
-     * Blocks the server thread until its complete (minimal lag first time when it needs to download them.
-     *
-     *  Here we want to make sure that the directories below exist before the plugin is enabled.
-     */
     override fun onLoad() {
-
-        SpigotDependencyManager.of(this).loadAllDependencies().join() //block until everything is loaded
 
         pluginInstance = this
         try {

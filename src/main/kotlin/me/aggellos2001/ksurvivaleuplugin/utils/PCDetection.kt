@@ -286,15 +286,15 @@ class PCDetection {
     /**
      * Function that will pull data from the API URL.
      *
-     * @param url     full based url from arguments given
+     * @param urlParam full based url from arguments given
      * @param timeout timeout in milliseconds before api will give up
      * @return JSON Output of query
      * @throws MalformedURLException
      * @throws IOException
      */
     @Throws(MalformedURLException::class, IOException::class)
-    fun query(url: String?, timeout: Int): String {
-        var url = url
+    fun query(urlParam: String?, timeout: Int): String {
+        var url = urlParam
         val response = StringBuilder()
         val website = URL(url)
         val connection = website.openConnection()
