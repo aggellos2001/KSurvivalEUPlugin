@@ -24,9 +24,9 @@ class PCDetection {
     var proxy: String? = null
     var type: String? = null
     var port: String? = null
-    var last_seen_human: String? = null
-    var last_seen_unix: String? = null
-    var query_time: String? = null
+    var lastSeenHuman: String? = null
+    var lastSeenUnix: String? = null
+    var queryTime: String? = null
     var message: String? = null
     var error: String? = null
     var risk = 0
@@ -46,9 +46,9 @@ class PCDetection {
      *
      * @author DefianceCoding
      */
-    var api_key: String
-    private var api_url = "http://proxycheck.io/v2/"
-    private var api_timeout = 5000
+    private var apiKey: String
+    private var apiUrl = "http://proxycheck.io/v2/"
+    private var apiTimeout = 5000
     private var useVpn = 0
     private var useAsn = 0
     private var useNode = 0
@@ -61,12 +61,12 @@ class PCDetection {
     private var tag: String? = null
 
     constructor(key: String) {
-        api_key = key
+        apiKey = key
     }
 
     constructor(key: String, timeout: Int) {
-        api_key = key
-        api_timeout = timeout
+        apiKey = key
+        apiTimeout = timeout
     }
 
     /**
@@ -74,8 +74,8 @@ class PCDetection {
      *
      * @param key APIKey from RESTful API
      */
-    fun set_api_key(key: String) {
-        api_key = key
+    fun setApiKey(key: String) {
+        apiKey = key
     }
 
     /**
@@ -84,11 +84,7 @@ class PCDetection {
      * @param variable Boolean value to set if you will check for VPN's
      */
     fun setUseVpn(variable: Boolean) {
-        if (variable) {
-            useVpn = 1
-        } else {
-            useVpn = 0
-        }
+        useVpn = if (variable) 1 else 0
     }
 
     /**
@@ -97,11 +93,7 @@ class PCDetection {
      * @param variable Boolean value to set if you will check for the ASN
      */
     fun setUseAsn(variable: Boolean) {
-        if (variable) {
-            useAsn = 1
-        } else {
-            useAsn = 0
-        }
+        useAsn = if (variable) 1 else 0
     }
 
     /**
@@ -110,11 +102,7 @@ class PCDetection {
      * @param variable Boolean value to set if you will check nodes
      */
     fun setUseNode(variable: Boolean) {
-        if (variable) {
-            useNode = 1
-        } else {
-            useNode = 0
-        }
+        useNode = if (variable) 1 else 0
     }
 
     /**
@@ -123,11 +111,7 @@ class PCDetection {
      * @param variable Boolean value to set if you will check time it took to get results (note this doesn't count network overhead)
      */
     fun setUseTime(variable: Boolean) {
-        if (variable) {
-            useTime = 1
-        } else {
-            useTime = 0
-        }
+        useTime = if (variable) 1 else 0
     }
 
     /**
@@ -136,11 +120,7 @@ class PCDetection {
      * @param variable Boolean value to set if you will check IPs in real time
      */
     fun setUseInf(variable: Boolean) {
-        if (variable) {
-            useInf = 1
-        } else {
-            useInf = 0
-        }
+        useInf = if (variable) 1 else 0
     }
 
     /**
@@ -149,11 +129,7 @@ class PCDetection {
      * @param variable Boolean value to set if you will check Ports
      */
     fun setUsePort(variable: Boolean) {
-        if (variable) {
-            usePort = 1
-        } else {
-            usePort = 0
-        }
+        usePort = if (variable)  1 else 0
     }
 
     /**
@@ -162,11 +138,7 @@ class PCDetection {
      * @param variable Boolean value to set if you will check last seen used as a proxy
      */
     fun setUseSeen(variable: Boolean) {
-        if (variable) {
-            useSeen = 1
-        } else {
-            useSeen = 0
-        }
+        useSeen = if (variable)  1 else 0
     }
 
     /**
@@ -204,15 +176,15 @@ class PCDetection {
      *
      * @param timeout Time in Milliseconds the query will take before timing out
      */
-    fun set_api_timeout(timeout: Int) {
-        api_timeout = timeout
+    fun setApiTimeout(timeout: Int) {
+        apiTimeout = timeout
     }
 
     /**
      * Determines weather or not to use SSL when querying from the API Host
      */
     fun useSSL() {
-        api_url = api_url.replace("http://", "https://")
+        apiUrl = apiUrl.replace("http://", "https://")
     }
 
     /**
@@ -224,13 +196,13 @@ class PCDetection {
      */
     @Throws(IOException::class, ParseException::class)
     fun parseResults(ip: String) {
-        val queryUrl = get_query_url(ip)
-        val queryResult = query(queryUrl, api_timeout)
+        val queryUrl = getQueryUrl(ip)
+        val queryResult = query(queryUrl, apiTimeout)
         val parser = JSONParser()
         val main = parser.parse(queryResult) as JSONObject
         val sub = main[ip] as JSONObject?
         status = main["status"] as String?
-        query_time = main["query time"] as String?
+        queryTime = main["query time"] as String?
         message = main["message"] as String?
         node = main["node"] as String?
         this.ip = ip
@@ -245,8 +217,8 @@ class PCDetection {
         proxy = sub?.get("proxy") as String?
         type = sub?.get("type") as String?
         port = sub?.get("port") as String?
-        last_seen_human = sub?.get("last seen human") as String?
-        last_seen_unix = sub?.get("last seen unix") as String?
+        lastSeenHuman = sub?.get("last seen human") as String?
+        lastSeenUnix = sub?.get("last seen unix") as String?
         error = sub?.get("error") as String?
         //without getOrDefault we get NPE for whitelisted/blacklisted IP's because risk value is not returned from API
         if (sub != null) {
@@ -263,8 +235,8 @@ class PCDetection {
      */
     @Throws(IOException::class)
     fun getResponseAsString(ip: String): String {
-        val query_url = get_query_url(ip)
-        return query(query_url, api_timeout)
+        val queryUrl = getQueryUrl(ip)
+        return query(queryUrl, apiTimeout)
     }
 
     /**
@@ -274,8 +246,8 @@ class PCDetection {
      * @param ip IP To query
      * @return String URL
      */
-    fun get_query_url(ip: String): String {
-        return (api_url + ip + "?key=" + api_key
+    fun getQueryUrl(ip: String): String {
+        return (apiUrl + ip + "?key=" + apiKey
                 + "&vpn=" + useVpn + "&asn=" + useAsn
                 + "&node=" + useNode + "&time=" + useTime
                 + "&inf=" + useInf + "&port=" + usePort
@@ -317,7 +289,7 @@ class PCDetection {
 
     override fun toString(): String {
         return """
-            r
+        
         Status: $status 
         Node: $node 
         IP: $ip 
@@ -328,9 +300,9 @@ class PCDetection {
         IsProxy: $proxy 
         Type: $type 
         Port: $port 
-        Last seen human: $last_seen_human 
-        Last seen unix: $last_seen_unix 
-        Query Time: $query_time 
+        Last seen human: $lastSeenHuman 
+        Last seen unix: $lastSeenUnix 
+        Query Time: $queryTime 
         API message: $message 
         Error (if any): $error 
         Risk factor: $risk""".trimIndent()
