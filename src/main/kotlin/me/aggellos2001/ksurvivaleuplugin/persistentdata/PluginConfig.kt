@@ -8,7 +8,6 @@ import java.nio.file.Files
 lateinit var pluginConfig: PluginConfig
 
 data class PluginConfig(
-    var entityLimit: Int = 20,
     var wildBlockRange: Int = 10_000,
     var wildCost: Int = 10,
     var voteApiToken: String? = "null",
