@@ -17,11 +17,24 @@ object BlockVPN : Listener {
     fun getFromCache(hostAddress: String): PCDetection? = detectionCache[hostAddress]
     fun clearHostName(hostAddress: String): PCDetection? = detectionCache.remove(hostAddress)
 
-    private val kickMessage: String =
+    private val kickMessageProxy: String =
         """
             &c&l---------------------------------------------
             
             &c&lDetected a high risk connection or VPN!!! 
+            
+            &eIf you believe this is a mistake contact the owner (aggellos#0001) in our Discord: &lhttp://discord.survivaleu.com/
+            
+            &aYour IP Address: &b&l%s
+            
+            &c&l---------------------------------------------
+            """.trimIndent()
+
+    private val blackListedMessage: String =
+        """
+            &c&l---------------------------------------------
+            
+            &c&lYou are blacklisted!!! 
             
             &eIf you believe this is a mistake contact the owner (aggellos#0001) in our Discord: &lhttp://discord.survivaleu.com/
             
@@ -38,13 +51,20 @@ object BlockVPN : Listener {
         val detection = detectionCache[hostAddress] ?: getProxyCheckFromAPI(hostAddress)
 
         if (detection.status == "ok" || detection.status == "warning") {
-            if (detection.risk > 67 || (detection.proxy == "yes" && detection.type == "vpn"))
+            if (detection.type?.startsWith("blacklisted",true) == true){
                 e.disallow(
                     AsyncPlayerPreLoginEvent.Result.KICK_OTHER,
-                    String.format(kickMessage, hostAddress).colorizeToComponent()
+                    String.format(blackListedMessage, hostAddress).colorizeToComponent()
                 )
-        } else
-            pluginInstance.logger.warning("VPN/Proxy finder API call failed for player ${e.name}!")
+            }
+            if (detection.risk > 67 || (detection.proxy == "yes" && detection.type == "VPN"))
+                e.disallow(
+                    AsyncPlayerPreLoginEvent.Result.KICK_OTHER,
+                    String.format(kickMessageProxy, hostAddress).colorizeToComponent()
+                )
+        } else {
+            pluginInstance.logger.warning("VPN/Proxy finder API call failed for player ${e.name}! Response = $detection")
+        }
 
         detectionCache[hostAddress] = detection
     }
@@ -55,7 +75,7 @@ object BlockVPN : Listener {
     private fun getProxyCheckFromAPI(hostAddress: String): PCDetection {
 
         val token = if (pluginConfig.vpnProxyCheckerToken == null || pluginConfig.vpnProxyCheckerToken == "null")
-            throw IllegalArgumentException("Proxy detector token key is not set in the config!") else pluginConfig.voteApiToken!!
+            throw IllegalArgumentException("Proxy detector token key is not set in the config!") else pluginConfig.vpnProxyCheckerToken!!
 
         val detection = PCDetection(token)
         detection.useSSL()
