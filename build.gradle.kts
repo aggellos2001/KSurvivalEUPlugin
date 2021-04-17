@@ -62,6 +62,8 @@ tasks.withType<KotlinCompile>().configureEach {
 
 tasks.withType<com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar>().configureEach {
 
+    inputs.file("${projectDir}/build.gradle.kts")
+
     this.dependsOn("assemble")
 
     relocate("kotlin","me.aggellos2001.kotlin")
