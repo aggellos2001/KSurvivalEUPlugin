@@ -40,6 +40,7 @@ fun registerCommandsAndEvents() {
         registerCommand(ReportBug)
         registerCommand(LockChest)
         registerCommand(PlayTime)
+        registerCommand(OreBroadcast)
     }
 
     pluginInstance.run {
@@ -64,6 +65,8 @@ fun registerCommandsAndEvents() {
         registerEvents(EarningMoney)
         registerEvents(JoinLeaveMessage)
         registerEvents(LockChestListeners)
+        registerEvents(OreBroadcast)
+
     }
 
     COMMAND_MANAGER.run {

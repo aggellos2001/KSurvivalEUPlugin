@@ -44,10 +44,12 @@ fun JavaPlugin.logInGame(message: String, addPrefix: Boolean = true) {
 fun MutableCollection<out CommandSender>.sendColorizedMessage(
     message: String,
     addPrefix: Boolean = false,
-    predicate: Predicate<CommandSender>
+    predicate: Predicate<CommandSender>? = null
 ) {
     this.forEach {
-        if (predicate.test(it))
+        if (predicate == null)
+            it.sendColorizedMessage(message, addPrefix)
+        else if (predicate.test(it))
             it.sendColorizedMessage(message, addPrefix)
     }
 }
