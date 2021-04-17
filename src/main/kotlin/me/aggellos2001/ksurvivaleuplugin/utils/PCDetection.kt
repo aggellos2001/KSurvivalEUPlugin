@@ -129,7 +129,7 @@ class PCDetection {
      * @param variable Boolean value to set if you will check Ports
      */
     fun setUsePort(variable: Boolean) {
-        usePort = if (variable)  1 else 0
+        usePort = if (variable) 1 else 0
     }
 
     /**
@@ -138,7 +138,7 @@ class PCDetection {
      * @param variable Boolean value to set if you will check last seen used as a proxy
      */
     fun setUseSeen(variable: Boolean) {
-        useSeen = if (variable)  1 else 0
+        useSeen = if (variable) 1 else 0
     }
 
     /**

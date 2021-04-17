@@ -51,7 +51,7 @@ object BlockVPN : Listener {
         val detection = detectionCache[hostAddress] ?: getProxyCheckFromAPI(hostAddress)
 
         if (detection.status == "ok" || detection.status == "warning") {
-            if (detection.type?.startsWith("blacklisted",true) == true){
+            if (detection.type?.startsWith("blacklisted", true) == true) {
                 e.disallow(
                     AsyncPlayerPreLoginEvent.Result.KICK_OTHER,
                     String.format(blackListedMessage, hostAddress).colorizeToComponent()
