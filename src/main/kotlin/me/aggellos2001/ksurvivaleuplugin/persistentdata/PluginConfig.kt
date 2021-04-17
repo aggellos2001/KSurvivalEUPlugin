@@ -25,7 +25,7 @@ object PluginConfigHandler {
             pluginConfig = PluginConfig()
         } else {
             Files.newBufferedReader(configFile.toPath()).use {
-                pluginConfig = gson.fromJson(it, PluginConfig::class.java)
+                pluginConfig = gson.fromJson(it, PluginConfig::class.java) ?: PluginConfig()
             }
         }
     }
