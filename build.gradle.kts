@@ -10,7 +10,7 @@ plugins {
 }
 
 group = "me.aggellos2001.ksurvivaleuplugin"
-version = "1.16.5_1"
+version = "1.1.0"
 val projectVersion = version
 
 repositories {
