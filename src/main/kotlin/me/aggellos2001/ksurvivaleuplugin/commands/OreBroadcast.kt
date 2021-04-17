@@ -36,8 +36,7 @@ object OreBroadcast : BaseCommand(), Listener {
     private val detectableBlocks =
         arrayOf(
             Material.DIAMOND_ORE, Material.EMERALD_ORE, Material.ANCIENT_DEBRIS, Material.SPAWNER,
-            Material.NETHER_QUARTZ_ORE, Material.LAPIS_ORE, Material.IRON_ORE, Material.REDSTONE_ORE,
-            Material.GOLD_ORE
+            Material.LAPIS_ORE, Material.IRON_ORE, Material.REDSTONE_ORE, Material.GOLD_ORE
         )
 
     @EventHandler(ignoreCancelled = true)
@@ -51,7 +50,10 @@ object OreBroadcast : BaseCommand(), Listener {
 
         if (blockType !in detectableBlocks) return //return if ore mined is not in list above
 
-        Bukkit.getOnlinePlayers().sendColorizedMessage("&aPlayer &e${player.name}&a mined &b${blockType.toNiceString()}&a at location &e$blockLocationNiceString!",true) {
+        Bukkit.getOnlinePlayers().sendColorizedMessage(
+            "&aPlayer &e${player.name}&a mined &b${blockType.toNiceString()}&a at location &e$blockLocationNiceString!",
+            true
+        ) {
             it.hasPermission("seu.ore") && receivingOreAlertPlayerList.any { ref -> ref.get() == it } // same as receivingOreAlertPlayers.contains(it) but without using weak reference
         }
     }
