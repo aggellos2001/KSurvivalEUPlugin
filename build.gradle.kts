@@ -10,7 +10,7 @@ plugins {
 }
 
 group = "me.aggellos2001.ksurvivaleuplugin"
-version = "1.1.0"
+version = "1.1.1"
 val projectVersion = version
 
 repositories {
@@ -43,7 +43,6 @@ dependencies {
     implementation("me.mattstudios.utils:matt-framework-gui:2.0.3.3")
     implementation("com.github.linkedin:URL-Detector:-SNAPSHOT")
     implementation("me.mattstudios:mf-msg-bukkit:2.0.2")
-    implementation("com.google.code.gson:gson:2.8.6")
     implementation("com.github.ben-manes.caffeine:caffeine:3.0.1")
 
 }
@@ -70,8 +69,15 @@ tasks.withType<com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar>().con
     relocate("co.aikar.commands","me.aggellos2001.acf")
     relocate("co.aikar.locales","me.aggellos2001.locales")
     relocate("co.aikar.taskchain","me.aggellos2001.taskchain")
-    relocate("co.aikar.mfgui","me.aggellos2001.mattlib")
-    relocate("co.aikar.mfmsg","me.aggellos2001.mfmsg")
+    relocate("me.mattstudios.mfmsg","me.aggellos2001.mfmsg")
+    relocate("me.mattstudios.mfgui","me.aggellos2001.mfgui")
+    relocate("com.google.errorprone","me.aggellos2001.errorprone")
+    relocate("com.github.benmanes.caffeine.cache","me.aggellos2001.caffeine")
+    relocate("com.linkedin.urls","me.aggellos2001.linkedin")
+    relocate("org.apache.commons.lang3","me.aggellos2001.apache.commons.lang3")
+    relocate("org.jetbrains.annotations","me.aggellos2001.annotations")
+    relocate("org.intellij","me.aggellos2001.intellij")
+    relocate("org.checkerframework","me.aggellos2001.checkerframework")
 
     archiveFileName.set("KSurvivalEUPlugin-$projectVersion.jar")
     destinationDirectory.set(file("C:\\Users\\aggel\\Desktop\\Minecraft_Test_Servers\\Test_server\\plugins"))
