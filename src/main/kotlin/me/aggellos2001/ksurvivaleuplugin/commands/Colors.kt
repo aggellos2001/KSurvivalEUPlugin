@@ -12,7 +12,7 @@ import net.kyori.adventure.text.format.TextColor
 import net.kyori.adventure.text.format.TextDecoration
 import org.bukkit.entity.Player
 
-@CommandAlias("colors")
+@CommandAlias("color|helpcolors")
 object Colors : BaseCommand() {
 
     @Default
