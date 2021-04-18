@@ -20,23 +20,23 @@ import java.lang.ref.WeakReference
 @CommandPermission("seu.ore")
 object OreBroadcast : BaseCommand(), Listener {
 
-    private val receivingOreAlertPlayerList = mutableListOf<WeakReference<Player>>()
+    private val notReceivingOreAlertPlayerList = mutableListOf<WeakReference<Player>>()
 
     @Default
     fun toggleAlerts(player: Player) {
-        if (receivingOreAlertPlayerList.any { it.get() == player }) {
-            receivingOreAlertPlayerList.removeIf { it.get() == player }
-            player.sendColorizedMessage("&eNo longer receiving ore alerts!")
-        } else {
-            receivingOreAlertPlayerList.add(player.wrapToWeakReference())
+        if (notReceivingOreAlertPlayerList.any { it.get() == player }) {
+            notReceivingOreAlertPlayerList.removeIf { it.get() == player }
             player.sendColorizedMessage("&aNow receiving ore alerts!")
+        } else {
+            notReceivingOreAlertPlayerList.add(player.wrapToWeakReference())
+            player.sendColorizedMessage("&eNo longer receiving ore alerts!")
         }
     }
 
     private val detectableBlocks =
         arrayOf(
             Material.DIAMOND_ORE, Material.EMERALD_ORE, Material.ANCIENT_DEBRIS, Material.SPAWNER,
-            Material.LAPIS_ORE, Material.IRON_ORE, Material.REDSTONE_ORE, Material.GOLD_ORE
+            Material.GOLD_ORE
         )
 
     @EventHandler(ignoreCancelled = true)
@@ -54,7 +54,7 @@ object OreBroadcast : BaseCommand(), Listener {
             "&aPlayer &e${player.name}&a mined &b${blockType.toNiceString()}&a at location &e$blockLocationNiceString!",
             true
         ) {
-            it.hasPermission("seu.ore") && receivingOreAlertPlayerList.any { ref -> ref.get() == it } // same as receivingOreAlertPlayers.contains(it) but without using weak reference
+            it.hasPermission("seu.ore") && !notReceivingOreAlertPlayerList.any { ref -> ref.get() == it } // same as receivingOreAlertPlayers.contains(it) but without using weak reference
         }
     }
 }
