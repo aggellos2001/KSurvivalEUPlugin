@@ -41,6 +41,7 @@ fun registerCommandsAndEvents() {
         registerCommand(LockChest)
         registerCommand(PlayTime)
         registerCommand(OreBroadcast)
+        registerCommand(Colors)
     }
 
     pluginInstance.run {
