@@ -11,4 +11,4 @@ fun Component.serializeToString(): String = legacyComponentSerializer.serialize(
 
 fun String.deserializeToComponent(): Component = legacyComponentSerializer.deserialize(this)
 
-fun textOf(text:String):TextComponent = Component.text(text)
+fun textOf(text: String): TextComponent = Component.text(text)

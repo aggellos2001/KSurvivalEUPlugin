@@ -26,6 +26,8 @@ repositories {
     maven("https://repo.mattstudios.me/artifactory/public")
     maven("https://repo.aikar.co/content/groups/aikar/")
     maven("https://maven.playpro.com")
+    maven("https://repo.essentialsx.net/releases/")
+    maven("https://dl.bintray.com/ichbinjoe/public/")
 
 }
 
@@ -34,8 +36,9 @@ dependencies {
     compileOnly("com.destroystokyo.paper:paper-api:1.16.5-R0.1-SNAPSHOT")
     compileOnly("org.jetbrains:annotations:20.1.0")
     compileOnly("net.luckperms:api:5.3")
-    compileOnly("net.ess3:EssentialsX:2.17.2")
+    compileOnly("net.ess3:EssentialsX:2.18.2")
     compileOnly("net.coreprotect:coreprotect:19.5")
+    compileOnly("com.vexsoftware:nuvotifier-universal:2.6.0")
 
     implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
     implementation("co.aikar:acf-paper:0.5.0-SNAPSHOT")

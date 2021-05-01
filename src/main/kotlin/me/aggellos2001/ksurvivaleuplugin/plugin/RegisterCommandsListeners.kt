@@ -67,6 +67,7 @@ fun registerCommandsAndEvents() {
         registerEvents(JoinLeaveMessage)
         registerEvents(LockChestListeners)
         registerEvents(OreBroadcast)
+        registerEvents(Votifier)
 
     }
 
