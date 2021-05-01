@@ -10,7 +10,7 @@ plugins {
 }
 
 group = "me.aggellos2001.ksurvivaleuplugin"
-version = "1.2.0"
+version = "1.2.1"
 val projectVersion = version
 
 repositories {
@@ -64,10 +64,6 @@ tasks.withType<KotlinCompile>().configureEach {
 
 tasks.withType<com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar>().configureEach {
 
-    inputs.file("${projectDir}/build.gradle.kts")
-
-    this.dependsOn("assemble")
-
     relocate("kotlin","me.aggellos2001.kotlin")
     relocate("co.aikar.commands","me.aggellos2001.acf")
     relocate("co.aikar.locales","me.aggellos2001.locales")
@@ -83,7 +79,6 @@ tasks.withType<com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar>().con
     relocate("org.checkerframework","me.aggellos2001.checkerframework")
 
     archiveFileName.set("KSurvivalEUPlugin-$projectVersion.jar")
-    destinationDirectory.set(file("C:\\Users\\aggel\\Desktop\\Minecraft_Test_Servers\\Test_server\\plugins"))
 }
 
 tasks.processResources {
