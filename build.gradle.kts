@@ -3,21 +3,20 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
     java
-    kotlin("jvm") version "1.4.31"
+    kotlin("jvm") version "1.4.32"
     id("com.github.ben-manes.versions") version ("0.38.0")
-    id("org.jetbrains.dokka") version "1.4.30"
+    id("org.jetbrains.dokka") version "1.4.32"
     id ("com.github.johnrengelman.shadow") version "6.1.0"
 }
 
 group = "me.aggellos2001.ksurvivaleuplugin"
-version = "1.2.1"
+version = "1.2.2"
 val projectVersion = version
 
 repositories {
 
     mavenCentral()
     mavenLocal()
-    jcenter()
 
     maven("https://jitpack.io")
     maven("https://papermc.io/repo/repository/maven-public/")
@@ -38,7 +37,7 @@ dependencies {
     compileOnly("net.luckperms:api:5.3")
     compileOnly("net.ess3:EssentialsX:2.18.2")
     compileOnly("net.coreprotect:coreprotect:19.5")
-    compileOnly("com.vexsoftware:nuvotifier-universal:2.6.0")
+    compileOnly("com.github.NuVotifier:NuVotifier:2.7.2")
 
     implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
     implementation("co.aikar:acf-paper:0.5.0-SNAPSHOT")
@@ -46,7 +45,7 @@ dependencies {
     implementation("me.mattstudios.utils:matt-framework-gui:2.0.3.3")
     implementation("com.github.linkedin:URL-Detector:-SNAPSHOT")
     implementation("me.mattstudios:mf-msg-bukkit:2.0.2")
-    implementation("com.github.ben-manes.caffeine:caffeine:3.0.1")
+    implementation("com.github.ben-manes.caffeine:caffeine:3.0.2")
 
 }
 
@@ -55,8 +54,8 @@ tasks.withType<KotlinCompile>().configureEach {
         useIR = true
         jvmTarget = "1.8"
         sourceCompatibility = "1.8"
-        languageVersion = "1.4"
-        apiVersion = "1.4"
+        languageVersion = "1.5"
+        apiVersion = "1.5"
         javaParameters = true
         freeCompilerArgs += "-Xopt-in=kotlin.time.ExperimentalTime"
     }
@@ -79,6 +78,7 @@ tasks.withType<com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar>().con
     relocate("org.checkerframework","me.aggellos2001.checkerframework")
 
     archiveFileName.set("KSurvivalEUPlugin-$projectVersion.jar")
+    destinationDirectory.set(file("C:\\Users\\aggel\\Desktop\\Minecraft_Test_Servers\\Test_server\\plugins"))
 }
 
 tasks.processResources {
