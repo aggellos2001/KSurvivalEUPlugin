@@ -52,8 +52,8 @@ class KSurvivalEUPlugin : JavaPlugin() {
         COREPROTECT_API = getCoreProtectAPI()
         LUCKPERMS_API = getLuckPermsAPI()
         pluginLogger = this.logger
-        registerCommandsAndEvents()
         PluginConfigHandler.loadConfig()
+        registerCommandsAndEvents()
         pluginLogger.info("&aPlugin loaded successfully".colorize())
 
     }
@@ -76,5 +76,5 @@ private fun getCoreProtectAPI(): CoreProtectAPI {
 
 private fun getLuckPermsAPI(): LuckPerms {
     Bukkit.getPluginManager().getPlugin("LuckPerms") ?: throw IllegalArgumentException("Getting LuckPerms API failed!")
-    return LuckPermsProvider.get();
+    return LuckPermsProvider.get()
 }
