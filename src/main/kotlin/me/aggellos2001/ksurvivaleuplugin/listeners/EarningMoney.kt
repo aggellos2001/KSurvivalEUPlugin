@@ -37,7 +37,7 @@ object EarningMoney : Listener {
 
     @EventHandler(ignoreCancelled = true)
     fun onEntityDeath(e: EntityDeathEvent) {
-        if (random.nextInt(100) < 80) return //20% to run
+        if (random.nextInt(100) < 90) return //10% to run
 
         val entity = e.entity
         if (entity is Player) return
@@ -45,29 +45,32 @@ object EarningMoney : Listener {
         val player = e.entity.killer ?: return
         val droppedExp = e.droppedExp
         val xpPrice = 5
-        val drops = e.drops
+//        val drops = e.drops
         var balanceWon = 0.000
 
-        var valuableDrops = 0
+//        var valuableDrops = 0
 
-        if (drops.isNotEmpty()) {
-            for (drop in drops) {
-                val price = drop.type.getShopPrice()
-                if (price == 0.0) continue
-                valuableDrops++
-                val dropAmount = drop.amount
-                val percentageOfPrice = random.nextDouble(0.001, 0.01)
-                balanceWon += price * percentageOfPrice * dropAmount
-            }
-        }
-        if (drops.isEmpty() || valuableDrops == 0) {
-            val percentageOfPrice = random.nextDouble(0.001, 0.1)
-            balanceWon += (droppedExp * xpPrice) * percentageOfPrice
-        }
+//        if (drops.isNotEmpty()) {
+//            for (drop in drops) {
+//                val price = drop.type.getShopPrice()
+//                if (price == 0.0) continue
+//                valuableDrops++
+//                val dropAmount = drop.amount
+//                val percentageOfPrice = random.nextDouble(0.001, 0.01)
+//                balanceWon += price * percentageOfPrice * dropAmount
+//            }
+//        }
+//        if (drops.isEmpty() || valuableDrops == 0) {
+//            val percentageOfPrice = random.nextDouble(0.001, 0.1)
+//            balanceWon += (droppedExp * xpPrice) * percentageOfPrice
+//        }
+//
+//        if (balanceWon > 2) {
+//            balanceWon -= (balanceWon.toInt() / 2)
+//        }
+        val percentageOfPrice = random.nextDouble(0.001, 0.1)
+        balanceWon += (droppedExp * xpPrice) * percentageOfPrice
 
-        if (balanceWon > 2) {
-            balanceWon -= (balanceWon.toInt() / 2)
-        }
         balanceWon = balanceWon.stripDecimals(4)
         Economy.add(player.uniqueId, balanceWon.toBigDecimal())
     }
