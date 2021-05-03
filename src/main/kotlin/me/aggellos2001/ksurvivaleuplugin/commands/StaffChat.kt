@@ -13,9 +13,7 @@ import org.bukkit.command.CommandSender
 object StaffChat : BaseCommand() {
 
     @Default
-    fun onStaffChatCommand(sender: CommandSender, message: String) {
-        Bukkit.getOnlinePlayers().sendColorizedMessage("&2[&6&lSC&r&2]&e ${sender.name}:&r&b $message") {
-            it.hasPermission("seu.staffchat")
-        }
+    fun onStaffChatCommand(sender: CommandSender) {
+        sender.sendColorizedMessage("&cUse /adminchat <message> or use /adminchat to change chat mode. (Also you can use /ac or /achat)")
     }
 }
