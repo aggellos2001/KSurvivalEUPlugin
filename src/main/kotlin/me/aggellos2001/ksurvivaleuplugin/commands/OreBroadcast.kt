@@ -36,7 +36,6 @@ object OreBroadcast : BaseCommand(), Listener {
     private val detectableBlocks =
         arrayOf(
             Material.DIAMOND_ORE, Material.EMERALD_ORE, Material.ANCIENT_DEBRIS, Material.SPAWNER,
-            Material.GOLD_ORE
         )
 
     @EventHandler(ignoreCancelled = true)
