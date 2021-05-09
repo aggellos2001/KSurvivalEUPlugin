@@ -78,7 +78,7 @@ tasks.withType<com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar>().con
     relocate("org.checkerframework","me.aggellos2001.checkerframework")
 
     archiveFileName.set("KSurvivalEUPlugin-$projectVersion.jar")
-    destinationDirectory.set(file("C:\\Users\\aggel\\Desktop\\Minecraft_Test_Servers\\Test_server\\plugins"))
+
 }
 
 tasks.processResources {
