@@ -53,8 +53,8 @@ dependencies {
 tasks.withType<KotlinCompile>().configureEach {
     kotlinOptions {
         useIR = true
-        jvmTarget = "1.8"
-        sourceCompatibility = "1.8"
+        jvmTarget = "11"
+        sourceCompatibility = "11"
         languageVersion = "1.4"
         apiVersion = "1.4"
         javaParameters = true
