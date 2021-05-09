@@ -50,6 +50,11 @@ dependencies {
 
 }
 
+tasks.withType<JavaCompile>().configureEach {
+    sourceCompatibility = "11"
+    targetCompatibility = "11"
+}
+
 tasks.withType<KotlinCompile>().configureEach {
     kotlinOptions {
         useIR = true
