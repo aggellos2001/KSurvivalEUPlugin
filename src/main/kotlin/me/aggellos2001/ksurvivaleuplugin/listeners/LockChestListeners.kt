@@ -1,8 +1,9 @@
-package me.aggellos2001.ksurvivaleuplugin.commands.lockchest
+package me.aggellos2001.ksurvivaleuplugin.listeners
 
 import com.github.benmanes.caffeine.cache.Cache
 import com.github.benmanes.caffeine.cache.Caffeine
 import com.github.benmanes.caffeine.cache.Scheduler
+import me.aggellos2001.ksurvivaleuplugin.utils.ChestLockUtil
 import me.aggellos2001.ksurvivaleuplugin.utils.sendColorizedMessage
 import me.aggellos2001.ksurvivaleuplugin.utils.serializeToString
 import me.aggellos2001.ksurvivaleuplugin.utils.stripColors

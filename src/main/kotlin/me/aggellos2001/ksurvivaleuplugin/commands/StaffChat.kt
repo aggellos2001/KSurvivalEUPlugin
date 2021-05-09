@@ -5,7 +5,6 @@ import co.aikar.commands.annotation.CommandAlias
 import co.aikar.commands.annotation.CommandPermission
 import co.aikar.commands.annotation.Default
 import me.aggellos2001.ksurvivaleuplugin.utils.sendColorizedMessage
-import org.bukkit.Bukkit
 import org.bukkit.command.CommandSender
 
 @CommandAlias("staffchat|schat")

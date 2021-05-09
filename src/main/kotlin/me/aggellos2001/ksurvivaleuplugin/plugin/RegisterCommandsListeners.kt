@@ -2,8 +2,6 @@ package me.aggellos2001.ksurvivaleuplugin.plugin
 
 import co.aikar.commands.ConditionFailedException
 import me.aggellos2001.ksurvivaleuplugin.commands.*
-import me.aggellos2001.ksurvivaleuplugin.commands.lockchest.LockChest
-import me.aggellos2001.ksurvivaleuplugin.commands.lockchest.LockChestListeners
 import me.aggellos2001.ksurvivaleuplugin.listeners.*
 import me.aggellos2001.ksurvivaleuplugin.utils.getCoolDown
 import me.aggellos2001.ksurvivaleuplugin.utils.getCoolDownErrorMessage
@@ -42,6 +40,7 @@ fun registerCommandsAndEvents() {
         registerCommand(PlayTime)
         registerCommand(OreBroadcast)
         registerCommand(Colors)
+        registerCommand(GlowNear)
     }
 
     pluginInstance.run {

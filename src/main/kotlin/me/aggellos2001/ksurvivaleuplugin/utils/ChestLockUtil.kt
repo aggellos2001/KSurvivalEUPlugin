@@ -1,7 +1,6 @@
-package me.aggellos2001.ksurvivaleuplugin.commands.lockchest
+package me.aggellos2001.ksurvivaleuplugin.utils
 
 import me.aggellos2001.ksurvivaleuplugin.hooks.EssentialsHook.getPlayerIfExists
-import me.aggellos2001.ksurvivaleuplugin.utils.*
 import org.bukkit.Material
 import org.bukkit.block.Block
 import org.bukkit.block.BlockFace
