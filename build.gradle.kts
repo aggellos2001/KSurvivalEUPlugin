@@ -55,8 +55,8 @@ tasks.withType<KotlinCompile>().configureEach {
         useIR = true
         jvmTarget = "1.8"
         sourceCompatibility = "1.8"
-        languageVersion = "1.5"
-        apiVersion = "1.5"
+        languageVersion = "1.4"
+        apiVersion = "1.4"
         javaParameters = true
         freeCompilerArgs += "-Xopt-in=kotlin.time.ExperimentalTime"
     }
