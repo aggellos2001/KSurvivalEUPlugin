@@ -1,11 +1,5 @@
 # Project exclude paths
 /build/
-gradle/
 build/
 .idea/
 .gradle/
-gradle.properties
-gradlew
-gradlew.bat
-settings.gradle.kts
-/src/main/kotlin/me/aggellos2001/ksurvivaleuplugin/listeners/EarningMoney.kt
