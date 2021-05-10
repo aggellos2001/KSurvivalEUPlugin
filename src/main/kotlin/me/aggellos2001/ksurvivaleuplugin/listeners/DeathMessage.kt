@@ -1,6 +1,8 @@
 package me.aggellos2001.ksurvivaleuplugin.listeners
 
 import me.aggellos2001.ksurvivaleuplugin.hooks.LuckPermsHookUtil.getRankPrefix
+import me.aggellos2001.ksurvivaleuplugin.utils.colorize
+import me.aggellos2001.ksurvivaleuplugin.utils.inTicks
 import me.aggellos2001.ksurvivaleuplugin.utils.sendColorizedMessage
 import org.bukkit.Bukkit
 import org.bukkit.event.EventHandler
@@ -8,6 +10,7 @@ import org.bukkit.event.Listener
 import org.bukkit.event.entity.EntityDamageEvent
 import org.bukkit.event.entity.PlayerDeathEvent
 import kotlin.random.Random
+import kotlin.time.seconds
 
 object DeathMessage : Listener {
 
@@ -164,6 +167,11 @@ object DeathMessage : Listener {
         }
         Bukkit.getServer()
             .sendColorizedMessage("&6[&bSurvivalEU-&r&c&lDeath&r&6] $deadPlayerRankFormatted $deathMessage", false)
+
+        deadPlayer.sendTitle(
+            "&c&lYOU DIED!".colorize(), "&eYou can do /back to get back to where you died!".colorize(),
+            20, 5.seconds.inTicks().toInt(), 40
+        )
 
     }
 }
