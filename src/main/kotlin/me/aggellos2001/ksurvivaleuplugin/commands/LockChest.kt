@@ -2,10 +2,7 @@ package me.aggellos2001.ksurvivaleuplugin.commands
 
 import co.aikar.commands.BaseCommand
 import co.aikar.commands.ConditionFailedException
-import co.aikar.commands.annotation.CommandAlias
-import co.aikar.commands.annotation.CommandCompletion
-import co.aikar.commands.annotation.Default
-import co.aikar.commands.annotation.HelpCommand
+import co.aikar.commands.annotation.*
 import me.aggellos2001.ksurvivaleuplugin.utils.ChestLockUtil
 import me.aggellos2001.ksurvivaleuplugin.utils.canBuild
 import me.aggellos2001.ksurvivaleuplugin.utils.sendColorizedMessage
@@ -14,6 +11,7 @@ import org.bukkit.block.Chest
 import org.bukkit.entity.Player
 
 @CommandAlias("lockchest|lchest")
+@Description("Locks a chest for up to 3 people including you. Do /lockchest help for more information")
 object LockChest : BaseCommand() {
 
     @Default

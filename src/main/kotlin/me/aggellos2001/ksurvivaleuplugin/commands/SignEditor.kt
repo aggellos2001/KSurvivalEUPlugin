@@ -2,10 +2,7 @@ package me.aggellos2001.ksurvivaleuplugin.commands
 
 import co.aikar.commands.BaseCommand
 import co.aikar.commands.ConditionFailedException
-import co.aikar.commands.annotation.CommandAlias
-import co.aikar.commands.annotation.Conditions
-import co.aikar.commands.annotation.Default
-import co.aikar.commands.annotation.Optional
+import co.aikar.commands.annotation.*
 import me.aggellos2001.ksurvivaleuplugin.plugin.pluginInstance
 import me.aggellos2001.ksurvivaleuplugin.utils.colorize
 import me.aggellos2001.ksurvivaleuplugin.utils.colorizeToComponent
@@ -20,6 +17,7 @@ import org.bukkit.persistence.PersistentDataType
 
 @CommandAlias("signeditor|seditor")
 @Conditions("cooldown:time=2,name=SignEditor")
+@Description("Edit signs easily. Add colors, clear lines and much more without having to break the sign")
 object SignEditor : BaseCommand() {
 
     private val signOwnerKey = NamespacedKey(pluginInstance, "signOwner")

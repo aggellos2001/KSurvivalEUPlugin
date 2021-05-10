@@ -19,6 +19,7 @@ import kotlin.time.seconds
 
 @CommandAlias("report")
 @Conditions("cooldown:time=5,name=Report")
+@Description("Report an abusive player to the staff team easily")
 object Report : BaseCommand() {
 
     @Default

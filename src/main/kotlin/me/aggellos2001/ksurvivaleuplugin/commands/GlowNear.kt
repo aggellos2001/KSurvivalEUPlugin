@@ -5,6 +5,7 @@ import co.aikar.commands.ConditionFailedException
 import co.aikar.commands.annotation.CommandAlias
 import co.aikar.commands.annotation.Conditions
 import co.aikar.commands.annotation.Default
+import co.aikar.commands.annotation.Description
 import me.aggellos2001.ksurvivaleuplugin.hooks.EssentialsHook.getEssentialsUser
 import me.aggellos2001.ksurvivaleuplugin.hooks.LuckPermsHookUtil.getRankPrefix
 import me.aggellos2001.ksurvivaleuplugin.utils.inTicks
@@ -17,6 +18,7 @@ import kotlin.time.seconds
 
 @CommandAlias("glownear|gnear")
 @Conditions("cooldown:time=180,name=GlowNear") //180 cooldown = 3mins
+@Description("Gives the Glow Effect to nearby entities over a 45 blocks range")
 object GlowNear : BaseCommand() {
 
     @Default

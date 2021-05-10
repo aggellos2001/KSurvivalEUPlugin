@@ -22,6 +22,7 @@ import kotlin.time.seconds
 import kotlin.time.toJavaDuration
 
 @CommandAlias("playerwarp|playerwarps|pwarp|pwarps")
+@Description("Create, visit or delete warps. All players can add their warp here")
 object PlayerWarp : BaseCommand() {
 
     private val pWarpUICache = Caffeine.newBuilder().scheduler(Scheduler.systemScheduler())

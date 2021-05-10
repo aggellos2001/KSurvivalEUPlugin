@@ -1,6 +1,7 @@
 package me.aggellos2001.ksurvivaleuplugin.commands
 
-import me.aggellos2001.ksurvivaleuplugin.utils.sendColorizedMessage
+import me.aggellos2001.ksurvivaleuplugin.utils.*
+import net.kyori.adventure.text.event.HoverEvent
 import org.bukkit.event.EventHandler
 import org.bukkit.event.Listener
 import org.bukkit.event.player.PlayerCommandPreprocessEvent

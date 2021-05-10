@@ -1,10 +1,7 @@
 package me.aggellos2001.ksurvivaleuplugin.commands
 
 import co.aikar.commands.BaseCommand
-import co.aikar.commands.annotation.CommandAlias
-import co.aikar.commands.annotation.Conditions
-import co.aikar.commands.annotation.Default
-import co.aikar.commands.annotation.Subcommand
+import co.aikar.commands.annotation.*
 import me.aggellos2001.ksurvivaleuplugin.hooks.LuckPermsHookUtil.getLuckPermsGroup
 import me.aggellos2001.ksurvivaleuplugin.hooks.LuckPermsHookUtil.hasDonated
 import me.aggellos2001.ksurvivaleuplugin.utils.sendColorizedMessage
@@ -15,6 +12,7 @@ import org.bukkit.potion.PotionEffectType
 import java.lang.ref.WeakReference
 
 @CommandAlias("donation|donations|rank|ranks")
+@Description("Find how you can help your server")
 object Donation : BaseCommand() {
 
     private val playersWithDonationEffectsOn = mutableListOf<WeakReference<Player>>()

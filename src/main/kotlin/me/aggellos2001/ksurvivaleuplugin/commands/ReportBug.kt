@@ -4,6 +4,7 @@ import co.aikar.commands.BaseCommand
 import co.aikar.commands.annotation.CommandAlias
 import co.aikar.commands.annotation.Conditions
 import co.aikar.commands.annotation.Default
+import co.aikar.commands.annotation.Description
 import me.aggellos2001.javafiles.DiscordWebHook
 import me.aggellos2001.ksurvivaleuplugin.persistentdata.pluginConfig
 import me.aggellos2001.ksurvivaleuplugin.plugin.CHAIN_FACTORY
@@ -18,6 +19,7 @@ import kotlin.time.seconds
 
 @CommandAlias("reportbug|bugreport|rbug")
 @Conditions("cooldown:time=5,name=BugReport")
+@Description("Report a bug to the staff team easily")
 object ReportBug : BaseCommand() {
 
     @Default

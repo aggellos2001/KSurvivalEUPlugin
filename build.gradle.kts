@@ -11,7 +11,7 @@ plugins {
 }
 
 group = "me.aggellos2001.ksurvivaleuplugin"
-version = "1.2.3"
+version = "1.2.4"
 val projectVersion = version
 
 repositories {
@@ -89,4 +89,10 @@ tasks.withType<com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar>().con
 
 tasks.processResources {
     expand("version" to version)
+}
+
+publishing {
+    publications {
+        group = project.group
+    }
 }

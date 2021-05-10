@@ -3,11 +3,13 @@ package me.aggellos2001.ksurvivaleuplugin.commands
 import co.aikar.commands.BaseCommand
 import co.aikar.commands.annotation.CommandAlias
 import co.aikar.commands.annotation.Default
+import co.aikar.commands.annotation.Description
 import me.aggellos2001.ksurvivaleuplugin.utils.sendColorizedMessage
 import org.bukkit.block.Biome
 import org.bukkit.entity.Player
 
 @CommandAlias("slimechunk|chunkslime")
+@Description("Check if you are on a slime chunk")
 object SlimeChunk : BaseCommand() {
 
     @Default

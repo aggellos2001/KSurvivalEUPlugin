@@ -5,6 +5,7 @@ import co.aikar.commands.ConditionFailedException
 import co.aikar.commands.annotation.CommandAlias
 import co.aikar.commands.annotation.Conditions
 import co.aikar.commands.annotation.Default
+import co.aikar.commands.annotation.Description
 import me.aggellos2001.ksurvivaleuplugin.hooks.EssentialsHook.getEssentialsUser
 import me.aggellos2001.ksurvivaleuplugin.persistentdata.pluginConfig
 import me.aggellos2001.ksurvivaleuplugin.utils.isSafe
@@ -18,6 +19,7 @@ import kotlin.time.seconds
 
 @CommandAlias("wild")
 @Conditions("cooldown:time=120,name=Wild")
+@Description("Teleport somewhere randomly into the world")
 object Wild : BaseCommand() {
 
 

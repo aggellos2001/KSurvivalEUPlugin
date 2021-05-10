@@ -4,6 +4,7 @@ import co.aikar.commands.BaseCommand
 import co.aikar.commands.annotation.CommandAlias
 import co.aikar.commands.annotation.Conditions
 import co.aikar.commands.annotation.Default
+import co.aikar.commands.annotation.Description
 import me.aggellos2001.ksurvivaleuplugin.persistentdata.getPluginPlayerData
 import me.aggellos2001.ksurvivaleuplugin.persistentdata.setPluginPlayerData
 import me.aggellos2001.ksurvivaleuplugin.utils.colorize
@@ -19,6 +20,7 @@ import org.bukkit.inventory.ItemFlag
 
 @CommandAlias("settings")
 @Conditions("cooldown:time=2,name=Settings")
+@Description("Manage features like chat color, keep inventory, pvp and more")
 object Settings : BaseCommand() {
 
     @Default

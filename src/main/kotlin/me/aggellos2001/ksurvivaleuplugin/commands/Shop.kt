@@ -3,6 +3,7 @@ package me.aggellos2001.ksurvivaleuplugin.commands
 import co.aikar.commands.BaseCommand
 import co.aikar.commands.annotation.CommandAlias
 import co.aikar.commands.annotation.Default
+import co.aikar.commands.annotation.Description
 import com.github.benmanes.caffeine.cache.Caffeine
 import com.github.benmanes.caffeine.cache.Scheduler
 import me.aggellos2001.ksurvivaleuplugin.hooks.EssentialsHook.getEssentialsUser
@@ -21,6 +22,7 @@ import kotlin.time.seconds
 import kotlin.time.toJavaDuration
 
 @CommandAlias("shop")
+@Description("A shop that you can buy stuff")
 object Shop : BaseCommand() {
 
     private val shopUICache =

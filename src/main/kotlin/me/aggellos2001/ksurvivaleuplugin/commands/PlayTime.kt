@@ -3,12 +3,14 @@ package me.aggellos2001.ksurvivaleuplugin.commands
 import co.aikar.commands.BaseCommand
 import co.aikar.commands.annotation.CommandAlias
 import co.aikar.commands.annotation.Default
+import co.aikar.commands.annotation.Description
 import com.earth2me.essentials.utils.DateUtil
 import me.aggellos2001.ksurvivaleuplugin.utils.sendColorizedMessage
 import org.bukkit.Statistic
 import org.bukkit.entity.Player
 
 @CommandAlias("playtime")
+@Description("Find your total playtime on the server")
 object PlayTime : BaseCommand() {
 
     @Default
