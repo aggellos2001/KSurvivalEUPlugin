@@ -7,10 +7,8 @@ import co.aikar.commands.annotation.Default
 import co.aikar.commands.annotation.Description
 import me.aggellos2001.ksurvivaleuplugin.utils.colorize
 import me.aggellos2001.ksurvivaleuplugin.utils.inTicks
-import me.aggellos2001.ksurvivaleuplugin.utils.sendColorizedMessage
 import org.bukkit.Bukkit
 import org.bukkit.command.CommandSender
-import org.bukkit.entity.Player
 import kotlin.time.seconds
 
 @CommandAlias("alert")
