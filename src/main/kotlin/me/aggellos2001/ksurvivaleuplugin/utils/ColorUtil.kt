@@ -4,6 +4,7 @@ import me.mattstudios.mfmsg.base.MessageOptions
 import me.mattstudios.mfmsg.base.internal.Format
 import me.mattstudios.mfmsg.bukkit.BukkitMessage
 import net.kyori.adventure.text.Component
+import net.kyori.adventure.text.TextComponent
 import org.bukkit.ChatColor
 import org.bukkit.Server
 import org.bukkit.command.CommandSender
@@ -18,16 +19,15 @@ fun String.colorizeToComponent(addPrefix: Boolean = false): Component {
     else messageParser.parse(this).toString().deserializeToComponent()
 }
 
+fun String.colorizeToTextComponent(addPrefix: Boolean = false): TextComponent =
+    this.colorizeToComponent(addPrefix) as TextComponent
+
 fun String.colorize(addPrefix: Boolean = false): String {
     return if (addPrefix) messageParser.parse("&6[&bSurvivalEU&6]&r $this").toString()
     else messageParser.parse(this).toString()
 }
 
 fun String.stripColors() = ChatColor.stripColor(this)!!
-
-fun Component.colorize(): Component = this.serializeToString().colorizeToComponent()
-
-fun Component.stripColors(): Component = this.serializeToString().stripColors().deserializeToComponent()
 
 fun CommandSender.sendColorizedMessage(message: String, addPrefix: Boolean = true) {
     this.sendMessage(message.colorizeToComponent(addPrefix))
