@@ -10,7 +10,7 @@ import org.bukkit.Bukkit
 import org.bukkit.command.CommandSender
 import org.bukkit.event.Listener
 import org.bukkit.plugin.java.JavaPlugin
-import kotlin.time.seconds
+import kotlin.time.Duration
 
 fun JavaPlugin.registerEvents(e: Listener) {
     Bukkit.getPluginManager().registerEvents(e, this)
@@ -95,7 +95,7 @@ fun registerCommandsAndEvents() {
                 if (player.getCoolDown(commandName).first) {
                     throw  ConditionFailedException(player.getCoolDownErrorMessage(commandName))
                 }
-                player.setCoolDown(commandName, cooldown.seconds)
+                player.setCoolDown(commandName, Duration.seconds(cooldown))
             }
         }
     }

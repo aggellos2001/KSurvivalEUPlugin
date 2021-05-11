@@ -15,7 +15,7 @@ object WarpUI : Listener {
 
     @EventHandler(ignoreCancelled = true, priority = EventPriority.LOW)
     fun onWarpCommand(e: PlayerCommandPreprocessEvent) {
-        val command = e.message.toLowerCase()
+        val command = e.message.lowercase()
         val player = e.player
         if (command != "/warp" && command != "/warps") return
 

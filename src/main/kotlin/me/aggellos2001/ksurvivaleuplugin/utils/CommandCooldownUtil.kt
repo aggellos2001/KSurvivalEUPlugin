@@ -91,10 +91,10 @@ fun Player.getCoolDown(key: String): Pair<Boolean, Duration> {
 fun Player.getCoolDownErrorMessage(key: String): String {
     val coolDown = this.getCoolDown(key).second
     return when {
-        coolDown.inSeconds <= 60 -> "&cPlease wait ${coolDown.toInt(TimeUnit.SECONDS)} seconds before doing that again!"
-        coolDown.inMinutes <= 60 -> "&cPlease wait ${coolDown.toInt(TimeUnit.MINUTES)} minutes before doing that again!"
-        coolDown.inHours <= 24 -> "&cPlease wait ${coolDown.toInt(TimeUnit.HOURS)} hours before doing that again!"
-        coolDown.inDays <= 60 -> "&cPlease wait ${coolDown.toInt(TimeUnit.DAYS)} days before doing that again!"
+        coolDown.inWholeSeconds <= 60 -> "&cPlease wait ${coolDown.toInt(TimeUnit.SECONDS)} seconds before doing that again!"
+        coolDown.inWholeMinutes <= 60 -> "&cPlease wait ${coolDown.toInt(TimeUnit.MINUTES)} minutes before doing that again!"
+        coolDown.inWholeHours <= 24 -> "&cPlease wait ${coolDown.toInt(TimeUnit.HOURS)} hours before doing that again!"
+        coolDown.inWholeDays <= 60 -> "&cPlease wait ${coolDown.toInt(TimeUnit.DAYS)} days before doing that again!"
         else -> "&cPlease wait ${coolDown.toInt(TimeUnit.SECONDS)} seconds before doing that again!"
     }
 }

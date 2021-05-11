@@ -15,7 +15,7 @@ import org.bukkit.Location
 import org.bukkit.World
 import org.bukkit.entity.Player
 import kotlin.random.Random
-import kotlin.time.seconds
+import kotlin.time.Duration
 
 @CommandAlias("wild")
 @Conditions("cooldown:time=120,name=Wild")
@@ -33,7 +33,7 @@ object Wild : BaseCommand() {
 
     private fun teleportToRandomLocation(player: Player, maxRetries: Int) {
         if (maxRetries == 0) {
-            player.setCoolDown("Wild", 15.seconds)
+            player.setCoolDown("Wild", Duration.seconds(15))
             throw ConditionFailedException("Teleportation failed. Do /wild again!")
         }
         val (x, z) = getRandomXZ()
@@ -61,14 +61,14 @@ object Wild : BaseCommand() {
     fun onWildCommand(player: Player) {
 
         if (player.world.environment != World.Environment.NORMAL) {
-            player.setCoolDown("Wild", 5.seconds)
+            player.setCoolDown("Wild", Duration.seconds(5))
             throw ConditionFailedException("Wild is not supported in this world!")
         }
 
         val cost = pluginConfig.wildCost
 
         if (!player.getEssentialsUser().canAfford(cost.toBigDecimal())) {
-            player.setCoolDown("Wild", 5.seconds)
+            player.setCoolDown("Wild", Duration.seconds(5))
             throw ConditionFailedException("You need at least $cost$ to do /wild!")
         }
 

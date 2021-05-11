@@ -15,7 +15,7 @@ import java.awt.Color
 import java.net.http.HttpResponse
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
-import kotlin.time.seconds
+import kotlin.time.Duration
 
 @CommandAlias("report")
 @Conditions("cooldown:time=5,name=Report")
@@ -56,7 +56,7 @@ object Report : BaseCommand() {
                     playerReporting.sendColorizedMessage("&aReported player &e${playerGettingReported.player.name}&a successfully!")
                 else
                     playerReporting.sendColorizedMessage("&cReport failed! Try again in a few minutes!!!")
-                playerReporting.setCoolDown("Report", 60.seconds)
+                playerReporting.setCoolDown("Report", Duration.seconds(60))
             }.execute()
         } catch (t: Throwable) {
             t.printStackTrace()

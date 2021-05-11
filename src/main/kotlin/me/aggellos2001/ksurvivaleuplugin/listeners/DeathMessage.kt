@@ -10,7 +10,7 @@ import org.bukkit.event.Listener
 import org.bukkit.event.entity.EntityDamageEvent
 import org.bukkit.event.entity.PlayerDeathEvent
 import kotlin.random.Random
-import kotlin.time.seconds
+import kotlin.time.Duration
 
 object DeathMessage : Listener {
 
@@ -170,7 +170,7 @@ object DeathMessage : Listener {
 
         deadPlayer.sendTitle(
             "&c&lYOU DIED!".colorize(), "&eYou can do /back to get back to where you died!".colorize(),
-            20, 5.seconds.inTicks().toInt(), 40
+            20, Duration.seconds(5).inTicks().toInt(), 40
         )
 
     }

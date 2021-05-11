@@ -24,7 +24,7 @@ object AntiCaps : Listener {
         if (player.hasPermission("seu.caps")) return
         val message = e.message().serializeToString()
         if (message.capsInMessage() > 5) {
-            e.message(message.toLowerCase().deserializeToComponent())
+            e.message(message.lowercase().deserializeToComponent())
         }
     }
 }

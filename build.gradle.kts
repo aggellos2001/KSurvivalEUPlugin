@@ -4,7 +4,7 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 plugins {
     java
     `maven-publish`
-    kotlin("jvm") version "1.4.32"
+    kotlin("jvm") version "1.5.0"
     id("com.github.ben-manes.versions") version ("0.38.0")
     id("org.jetbrains.dokka") version "1.4.32"
     id ("com.github.johnrengelman.shadow") version "7.0.0"
@@ -57,11 +57,8 @@ tasks.withType<JavaCompile>().configureEach {
 
 tasks.withType<KotlinCompile>().configureEach {
     kotlinOptions {
-        useIR = true
         jvmTarget = "11"
         sourceCompatibility = "11"
-        languageVersion = "1.4"
-        apiVersion = "1.4"
         javaParameters = true
         freeCompilerArgs += "-Xopt-in=kotlin.time.ExperimentalTime"
     }

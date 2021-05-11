@@ -18,7 +18,7 @@ import org.bukkit.Location
 import org.bukkit.Material
 import org.bukkit.entity.Player
 import java.util.*
-import kotlin.time.seconds
+import kotlin.time.Duration
 import kotlin.time.toJavaDuration
 
 @CommandAlias("playerwarp|playerwarps|pwarp|pwarps")
@@ -26,7 +26,7 @@ import kotlin.time.toJavaDuration
 object PlayerWarp : BaseCommand() {
 
     private val pWarpUICache = Caffeine.newBuilder().scheduler(Scheduler.systemScheduler())
-        .expireAfterAccess(15.seconds.toJavaDuration()).build<Player, PaginatedGui>()
+        .expireAfterAccess(Duration.seconds(15).toJavaDuration()).build<Player, PaginatedGui>()
 
     @Default
     fun playerWarpUI(player: Player) {
@@ -120,7 +120,7 @@ object PlayerWarp : BaseCommand() {
     @Conditions("cooldown:time=5,name=PlayerWarp")
     fun onAddWarpCommand(player: Player, @Single warpName: String) {
 
-        val warpNameLowerCaseFiltered = warpName.toLowerCase().replace(Regex("[^A-Za-z0-9]"), "")
+        val warpNameLowerCaseFiltered = warpName.lowercase().replace(Regex("[^A-Za-z0-9]"), "")
 
         if (warpNameLowerCaseFiltered.length > 20) {
             throw ConditionFailedException("Warp name must be up to 20 characters!")

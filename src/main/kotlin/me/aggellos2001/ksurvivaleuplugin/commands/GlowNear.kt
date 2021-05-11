@@ -14,7 +14,7 @@ import me.aggellos2001.ksurvivaleuplugin.utils.setCoolDown
 import org.bukkit.entity.Player
 import org.bukkit.potion.PotionEffect
 import org.bukkit.potion.PotionEffectType
-import kotlin.time.seconds
+import kotlin.time.Duration
 
 @CommandAlias("glownear|gnear")
 @Conditions("cooldown:time=180,name=GlowNear") //180 cooldown = 3mins
@@ -27,7 +27,7 @@ object GlowNear : BaseCommand() {
         val essPlayer = player.getEssentialsUser()
         val price = 30.toBigDecimal()
         if (!essPlayer.canAfford(price)) {
-            player.setCoolDown("GlowNear", 10.seconds)
+            player.setCoolDown("GlowNear", Duration.seconds(10))
             throw ConditionFailedException("You must have 30$ to use this command!")
         }
         for (nearbyEntity in player.location.getNearbyLivingEntities(45.0)) {
@@ -38,7 +38,7 @@ object GlowNear : BaseCommand() {
             nearbyEntity.addPotionEffect(
                 PotionEffect(
                     PotionEffectType.GLOWING,
-                    20.seconds.inTicks().toInt(),
+                    Duration.seconds(20).inTicks().toInt(),
                     0,
                     true,
                     true

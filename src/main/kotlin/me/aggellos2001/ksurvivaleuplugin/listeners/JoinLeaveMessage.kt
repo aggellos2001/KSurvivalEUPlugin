@@ -9,7 +9,7 @@ import org.bukkit.event.EventHandler
 import org.bukkit.event.Listener
 import org.bukkit.event.player.PlayerJoinEvent
 import org.bukkit.event.player.PlayerQuitEvent
-import kotlin.time.seconds
+import kotlin.time.Duration
 
 object JoinLeaveMessage : Listener {
 
@@ -23,9 +23,9 @@ object JoinLeaveMessage : Listener {
         e.player.sendTitle(
             "&6&lWelcome to &2Survival&#000099EU &6S3".colorize(),
             "&aHope you like it here :D".colorize(),
-            3.seconds.inTicks().toInt(),
-            5.seconds.inTicks().toInt(),
-            3.seconds.inTicks().toInt()
+            Duration.seconds(3).inTicks().toInt(),
+            Duration.seconds(5).inTicks().toInt(),
+            Duration.seconds(3).inTicks().toInt()
         )
     }
 

@@ -9,7 +9,7 @@ import me.aggellos2001.ksurvivaleuplugin.utils.colorize
 import me.aggellos2001.ksurvivaleuplugin.utils.inTicks
 import org.bukkit.Bukkit
 import org.bukkit.command.CommandSender
-import kotlin.time.seconds
+import kotlin.time.Duration
 
 @CommandAlias("alert")
 @CommandPermission("seu.alert")
@@ -23,7 +23,7 @@ object Alert : BaseCommand() {
                 "&a&lAnnouncement".colorize(),
                 message.colorize(),
                 20,
-                seconds.seconds.inTicks().toInt(),
+                Duration.seconds(seconds).inTicks().toInt(),
                 40
             )
         }

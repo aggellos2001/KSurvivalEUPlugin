@@ -36,7 +36,7 @@ fun Enum<*>.toNiceString(): String {
     val processed = this.name.replace('_', ' ').split("\\s+").toTypedArray()
     val result = StringBuilder()
     for (word in processed) {
-        result.append(word.toLowerCase().capitalize())
+        result.append(word.lowercase().replaceFirstChar { it.uppercase() })
         if (processed[processed.size - 1] != word) {
             result.append(' ')
         }
@@ -75,5 +75,5 @@ inline fun JavaPlugin.measureBlockTime(crossinline block: () -> Unit) {
     block()
     val totalTime = System.nanoTime() - start
     val duration = totalTime.toDuration(TimeUnit.NANOSECONDS)
-    this.logInGame("&eBlock took: &b${duration.inMilliseconds}&ems")
+    this.logInGame("&eBlock took: &b${duration.inWholeMilliseconds}&ems")
 }

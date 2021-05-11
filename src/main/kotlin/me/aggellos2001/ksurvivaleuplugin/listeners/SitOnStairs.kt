@@ -17,7 +17,6 @@ import org.bukkit.inventory.EquipmentSlot
 import org.spigotmc.event.entity.EntityDismountEvent
 import java.util.*
 import kotlin.time.Duration
-import kotlin.time.seconds
 
 object SitOnStairs : Listener {
 
@@ -44,11 +43,11 @@ object SitOnStairs : Listener {
         if (stair.half == Bisected.Half.BOTTOM && (blockUp == Material.AIR || blockUp == Material.CAVE_AIR)) {
             val arrow = clickedBlock.world.spawnEntity(clickedBlock.location.add(0.5, 0.0, 0.5), EntityType.ARROW)
             arrow.addPassenger(player)
-            player.setCoolDown("sitonstairs", 5.seconds)
+            player.setCoolDown("sitonstairs", Duration.seconds(5))
             //schedule a runnable because "press left shift to dismount" will override actionbar message
             scheduleRunnable({
                 player.sendActionBar("&eGo to /settings to disable sitting on stair blocks!".colorizeToComponent())
-            }, pluginInstance, 2.seconds)
+            }, pluginInstance, Duration.seconds(2))
         }
     }
 

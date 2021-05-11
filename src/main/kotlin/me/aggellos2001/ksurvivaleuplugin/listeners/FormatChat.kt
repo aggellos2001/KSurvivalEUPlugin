@@ -10,7 +10,7 @@ import net.kyori.adventure.text.Component
 import org.bukkit.entity.Player
 import org.bukkit.event.EventHandler
 import org.bukkit.event.Listener
-import kotlin.time.seconds
+import kotlin.time.Duration
 
 
 object FormatChat : Listener, ChatComposer {
@@ -36,7 +36,7 @@ object FormatChat : Listener, ChatComposer {
             e.isCancelled = true
             player.sendColorizedMessage(player.getCoolDownErrorMessage("chat"))
         }
-        player.setCoolDown("chat", 0.5.seconds)
+        player.setCoolDown("chat", Duration.seconds(0.5))
         e.composer(this)
     }
 }

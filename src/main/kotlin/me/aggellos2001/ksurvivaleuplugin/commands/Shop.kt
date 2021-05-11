@@ -18,7 +18,7 @@ import org.bukkit.Material
 import org.bukkit.entity.Player
 import org.bukkit.inventory.ItemFlag
 import org.bukkit.inventory.ItemStack
-import kotlin.time.seconds
+import kotlin.time.Duration
 import kotlin.time.toJavaDuration
 
 @CommandAlias("shop")
@@ -26,7 +26,8 @@ import kotlin.time.toJavaDuration
 object Shop : BaseCommand() {
 
     private val shopUICache =
-        Caffeine.newBuilder().scheduler(Scheduler.systemScheduler()).expireAfterAccess(15.seconds.toJavaDuration())
+        Caffeine.newBuilder().scheduler(Scheduler.systemScheduler())
+            .expireAfterAccess(Duration.seconds(15).toJavaDuration())
             .build<Player, HashMap<Int, PaginatedGui>>()
 
     @Default
@@ -294,7 +295,7 @@ object Shop : BaseCommand() {
             "rail", "boat", "minecart", "elytra", "a_stick", "saddle", "rocket", "pearl"
         )
         for (name in names) {
-            if (this.name.toLowerCase().contains(name)) return true
+            if (this.name.lowercase().contains(name)) return true
         }
         return false
     }
@@ -306,7 +307,7 @@ object Shop : BaseCommand() {
             "shell", "bow", "arrow", "helmet", "chestplate", "leggings", "boots"
         )
         for (toolName in toolNames) {
-            if (this.name.toLowerCase().contains(toolName)) return true
+            if (this.name.lowercase().contains(toolName)) return true
         }
         return false
     }

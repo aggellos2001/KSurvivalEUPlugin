@@ -15,7 +15,7 @@ import java.awt.Color
 import java.net.http.HttpResponse
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
-import kotlin.time.seconds
+import kotlin.time.Duration
 
 @CommandAlias("reportbug|bugreport|rbug")
 @Conditions("cooldown:time=5,name=BugReport")
@@ -49,7 +49,7 @@ object ReportBug : BaseCommand() {
                     player.sendColorizedMessage("&aBug report sent successfully! Thank you :D! ")
                 else
                     player.sendColorizedMessage("&cBug report failed! Try again in a few minutes!!!")
-                player.setCoolDown("BugReport", 60.seconds)
+                player.setCoolDown("BugReport", Duration.seconds(60))
             }.execute()
         } catch (t: Throwable) {
             t.printStackTrace()

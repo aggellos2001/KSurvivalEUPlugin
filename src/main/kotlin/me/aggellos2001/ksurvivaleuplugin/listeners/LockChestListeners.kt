@@ -18,7 +18,7 @@ import org.bukkit.event.block.BlockBreakEvent
 import org.bukkit.event.block.SignChangeEvent
 import org.bukkit.event.inventory.InventoryMoveItemEvent
 import org.bukkit.event.player.PlayerInteractEvent
-import kotlin.time.seconds
+import kotlin.time.Duration
 import kotlin.time.toJavaDuration
 
 object LockChestListeners : Listener {
@@ -33,7 +33,7 @@ object LockChestListeners : Listener {
      */
     private val lockedChestCache: Cache<Block, ChestLockUtil> =
         Caffeine.newBuilder().scheduler(Scheduler.systemScheduler())
-            .expireAfterWrite(30.seconds.toJavaDuration()).build()
+            .expireAfterWrite(Duration.seconds(30).toJavaDuration()).build()
 
     @EventHandler(ignoreCancelled = true)
     fun preventLockingWithoutCommand(e: SignChangeEvent) {

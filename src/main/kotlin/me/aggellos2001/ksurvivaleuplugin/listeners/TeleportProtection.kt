@@ -6,13 +6,19 @@ import org.bukkit.event.Listener
 import org.bukkit.event.player.PlayerTeleportEvent
 import org.bukkit.potion.PotionEffect
 import org.bukkit.potion.PotionEffectType
-import kotlin.time.seconds
+import kotlin.time.Duration
 
 object TeleportProtection : Listener {
 
     @EventHandler(ignoreCancelled = true)
     fun onPlayerTeleport(e: PlayerTeleportEvent) {
         if (e.cause != PlayerTeleportEvent.TeleportCause.PLUGIN && e.cause != PlayerTeleportEvent.TeleportCause.COMMAND) return
-        e.player.addPotionEffect(PotionEffect(PotionEffectType.DAMAGE_RESISTANCE, 5.seconds.inTicks().toInt(), 5))
+        e.player.addPotionEffect(
+            PotionEffect(
+                PotionEffectType.DAMAGE_RESISTANCE,
+                Duration.seconds(5).inTicks().toInt(),
+                5
+            )
+        )
     }
 }
