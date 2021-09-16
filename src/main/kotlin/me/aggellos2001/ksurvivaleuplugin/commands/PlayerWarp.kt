@@ -5,14 +5,12 @@ import co.aikar.commands.ConditionFailedException
 import co.aikar.commands.annotation.*
 import com.github.benmanes.caffeine.cache.Caffeine
 import com.github.benmanes.caffeine.cache.Scheduler
+import dev.triumphteam.gui.builder.item.ItemBuilder
+import dev.triumphteam.gui.components.InteractionModifier
+import dev.triumphteam.gui.guis.PaginatedGui
 import me.aggellos2001.ksurvivaleuplugin.persistentdata.PlayerWarpData
 import me.aggellos2001.ksurvivaleuplugin.persistentdata.PlayerWarpDataClass
-import me.aggellos2001.ksurvivaleuplugin.utils.colorize
-import me.aggellos2001.ksurvivaleuplugin.utils.isSafe
-import me.aggellos2001.ksurvivaleuplugin.utils.sendColorizedMessage
-import me.aggellos2001.ksurvivaleuplugin.utils.toNiceString
-import me.mattstudios.mfgui.gui.components.util.ItemBuilder
-import me.mattstudios.mfgui.gui.guis.PaginatedGui
+import me.aggellos2001.ksurvivaleuplugin.utils.*
 import org.bukkit.Bukkit
 import org.bukkit.Location
 import org.bukkit.Material
@@ -35,14 +33,15 @@ object PlayerWarp : BaseCommand() {
             pWarpUI.open(player)
             return
         }
-        pWarpUI = PaginatedGui(6, 45, "<#0230fa>Player Warps".colorize()).apply {
-            setDefaultClickAction {
-                it.isCancelled = true
-            }
+        pWarpUI = PaginatedGui(6, 45, "<#0230fa>Player Warps".colorize(), InteractionModifier.VALUES).apply {
+////            disableAllInteractions()
+//            setDefaultClickAction {
+//                it.isCancelled = true
+//            }
 
             //next button
             setItem(6, 6, ItemBuilder.from(Material.LIME_DYE)
-                .setName("&a&lNext".colorize())
+                .name("&a&lNext".colorizeToComponent())
                 .asGuiItem {
                     this.next()
                 }
@@ -50,7 +49,7 @@ object PlayerWarp : BaseCommand() {
 
             //previous button
             setItem(6, 4, ItemBuilder.from(Material.GRAY_DYE)
-                .setName("&c&lPrevious".colorize())
+                .name("&c&lPrevious".colorizeToComponent())
                 .asGuiItem {
                     this.previous()
                 }
@@ -58,7 +57,7 @@ object PlayerWarp : BaseCommand() {
 
             //exit button
             setItem(6, 9, ItemBuilder.from(Material.BARRIER)
-                .setName("&4&lExit".colorize())
+                .name("&4&lExit".colorizeToComponent())
                 .glow(true)
                 .asGuiItem {
                     this.close(player)
@@ -66,7 +65,7 @@ object PlayerWarp : BaseCommand() {
             )
 
             //fill bottom row
-            filler.fillBottom(ItemBuilder.from(Material.GRAY_STAINED_GLASS_PANE).setName(" ").asGuiItem())
+            filler.fillBottom(ItemBuilder.from(Material.GRAY_STAINED_GLASS_PANE).name(textOf(" ")).asGuiItem())
 
 
             //add warps to UI
@@ -83,14 +82,14 @@ object PlayerWarp : BaseCommand() {
 
                 )
                 val guiItem = ItemBuilder.from(Material.MAP)
-                    .setName("&e${playerWarp.warpName}".colorize())
-                    .setLore(
-                        "<#595957>Warp Owner: &e${warpOwner.name}".colorize(),
-                        "<#7fc8eb>Location: ${warpLocation.toNiceString()}".colorize(),
+                    .name("&e${playerWarp.warpName}".colorizeToComponent())
+                    .lore(
+                        "<#595957>Warp Owner: &e${warpOwner.name}".colorizeToComponent(),
+                        "<#7fc8eb>Location: ${warpLocation.toNiceString()}".colorizeToComponent(),
                         if (player == warpOwner)
-                            "<#abaaa7>Right click: &cDelete".colorize()
+                            "<#abaaa7>Right click: &cDelete".colorizeToComponent()
                         else
-                            "<#abaaa7>Click to teleport!".colorize()
+                            "<#abaaa7>Click to teleport!".colorizeToComponent()
                     ).asGuiItem {
                         if (player == warpOwner) {
                             if (it.isRightClick) {

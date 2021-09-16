@@ -22,7 +22,7 @@ object DeathMessage : Listener {
         val killer = e.entity.killer
         val killerRankFormatted = "${killer?.getRankPrefix()} &b${killer?.name}&e "
         val randInt = Random.nextInt(2)
-        val defaultMessage = "&6[&bSurvivalEU-&r&c&lDeath&r&6] $deadPlayerRankFormatted died!"
+        val defaultMessage = "&6[&c&lDeath&r&6] $deadPlayerRankFormatted died!"
 
         if (lastDamageCause == null) {
             Bukkit.getServer().sendColorizedMessage(defaultMessage, false)
@@ -164,9 +164,10 @@ object DeathMessage : Listener {
             EntityDamageEvent.DamageCause.HOT_FLOOR -> "didn't notice that magma blocks are red hot!"
             EntityDamageEvent.DamageCause.CRAMMING -> "wanted to fit into one block with many others but failed!"
             EntityDamageEvent.DamageCause.DRYOUT -> "died!"
+            EntityDamageEvent.DamageCause.FREEZE -> "froze to death!"
         }
         Bukkit.getServer()
-            .sendColorizedMessage("&6[&bSurvivalEU-&r&c&lDeath&r&6] $deadPlayerRankFormatted $deathMessage", false)
+            .sendColorizedMessage("&6[&c&lDeath&r&6] $deadPlayerRankFormatted $deathMessage", false)
 
         deadPlayer.sendTitle(
             "&c&lYOU DIED!".colorize(), "&eYou can do /back to get back to where you died!".colorize(),

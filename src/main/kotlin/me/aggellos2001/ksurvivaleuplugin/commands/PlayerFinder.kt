@@ -5,24 +5,24 @@ import co.aikar.commands.annotation.CommandAlias
 import co.aikar.commands.annotation.Conditions
 import co.aikar.commands.annotation.Single
 import co.aikar.commands.annotation.Subcommand
+import me.aggellos2001.ksurvivaleuplugin.hooks.EssentialsHook.getEssentialsUser
 import me.aggellos2001.ksurvivaleuplugin.plugin.CHAIN_FACTORY
-import me.aggellos2001.ksurvivaleuplugin.plugin.ESSENTIALS_API
 import me.aggellos2001.ksurvivaleuplugin.utils.sendColorizedMessage
 import org.bukkit.Bukkit
-import org.bukkit.entity.Player
+import org.bukkit.command.CommandSender
 
 @CommandAlias("pfinder|playername|playerfinder")
 @Conditions("op")
 object PlayerFinder : BaseCommand() {
 
     @Subcommand("startsWith")
-    fun onPlayerFindStartsWith(player: Player, @Single name: String) {
+    fun onPlayerFindStartsWith(player: CommandSender, @Single name: String) {
         val chain = CHAIN_FACTORY.newChain<Any>()
         chain.asyncFirst {
             val players = Bukkit.getOfflinePlayers()
             val matches: MutableSet<String> = mutableSetOf()
             for (offlinePlayer in players) {
-                val essentialUser = ESSENTIALS_API.getUser(offlinePlayer.uniqueId) ?: continue
+                val essentialUser = offlinePlayer.getEssentialsUser() ?: continue
                 if (essentialUser.name.startsWith(name, true))
                     matches.add(essentialUser.name)
             }
@@ -41,13 +41,13 @@ object PlayerFinder : BaseCommand() {
     }
 
     @Subcommand("contains")
-    fun onPlayerFindContains(player: Player, @Single name: String) {
+    fun onPlayerFindContains(player: CommandSender, @Single name: String) {
         val chain = CHAIN_FACTORY.newChain<Any>()
         chain.asyncFirst {
             val players = Bukkit.getOfflinePlayers()
             val matches: MutableSet<String> = mutableSetOf()
             for (offlinePlayer in players) {
-                val essentialUser = ESSENTIALS_API.getUser(offlinePlayer.uniqueId) ?: continue
+                val essentialUser = offlinePlayer.getEssentialsUser() ?: continue
                 if (essentialUser.name.contains(name, true))
                     matches.add(essentialUser.name)
             }
@@ -66,13 +66,13 @@ object PlayerFinder : BaseCommand() {
     }
 
     @Subcommand("endsWith")
-    fun onPlayerFindEndsWith(player: Player, @Single name: String) {
+    fun onPlayerFindEndsWith(player: CommandSender, @Single name: String) {
         val chain = CHAIN_FACTORY.newChain<Any>()
         chain.asyncFirst {
             val players = Bukkit.getOfflinePlayers()
             val matches: MutableSet<String> = mutableSetOf()
             for (offlinePlayer in players) {
-                val essentialUser = ESSENTIALS_API.getUser(offlinePlayer.uniqueId) ?: continue
+                val essentialUser = offlinePlayer.getEssentialsUser() ?: continue
                 if (essentialUser.name.endsWith(name, true))
                     matches.add(essentialUser.name)
             }

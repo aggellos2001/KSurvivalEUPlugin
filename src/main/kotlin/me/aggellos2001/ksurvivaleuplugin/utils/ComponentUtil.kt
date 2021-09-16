@@ -4,7 +4,6 @@ import net.kyori.adventure.text.Component
 import net.kyori.adventure.text.TextComponent
 import net.kyori.adventure.text.event.ClickEvent
 import net.kyori.adventure.text.event.HoverEvent
-import net.kyori.adventure.text.format.NamedTextColor
 import net.kyori.adventure.text.format.Style
 import net.kyori.adventure.text.format.TextColor
 import net.kyori.adventure.text.format.TextDecoration
@@ -17,6 +16,8 @@ fun Component.serializeToString(): String = legacyComponentSerializer.serialize(
 
 fun String.deserializeToComponent(): Component = legacyComponentSerializer.deserialize(this)
 
+fun legacyTextOf(text: String): TextComponent = text.colorizeToTextComponent()
+
 fun textOf(text: String, color: TextColor? = null, vararg style: TextDecoration = emptyArray()): TextComponent =
     Component.text(text).style(Style.style(*style)).color(color)
 
@@ -24,7 +25,7 @@ fun interactiveTextOf(
     text: String,
     clickEvent: ClickEvent? = null,
     hoverEvent: HoverEvent<*>? = null,
-    color: NamedTextColor? = null,
+    color: TextColor? = null,
     vararg style: TextDecoration = emptyArray()
 ): TextComponent =
     Component.text(text).style(Style.style(*style)).color(color).hoverEvent(hoverEvent).clickEvent(clickEvent)
@@ -41,4 +42,8 @@ operator fun TextComponent.Builder.plus(a: TextComponent): TextComponent.Builder
 
 operator fun TextComponent.plus(a: TextComponent): TextComponent {
     return this.append(a)
+}
+
+operator fun TextComponent.div(a: TextComponent): TextComponent {
+    return this.append(Component.text("\n")).append(a)
 }

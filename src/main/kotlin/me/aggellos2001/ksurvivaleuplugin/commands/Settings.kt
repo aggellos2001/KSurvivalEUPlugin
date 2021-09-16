@@ -5,14 +5,14 @@ import co.aikar.commands.annotation.CommandAlias
 import co.aikar.commands.annotation.Conditions
 import co.aikar.commands.annotation.Default
 import co.aikar.commands.annotation.Description
+import dev.triumphteam.gui.builder.item.ItemBuilder
+import dev.triumphteam.gui.components.InteractionModifier
+import dev.triumphteam.gui.guis.Gui
+import dev.triumphteam.gui.guis.GuiItem
 import me.aggellos2001.ksurvivaleuplugin.persistentdata.getPluginPlayerData
 import me.aggellos2001.ksurvivaleuplugin.persistentdata.setPluginPlayerData
-import me.aggellos2001.ksurvivaleuplugin.utils.colorize
-import me.aggellos2001.ksurvivaleuplugin.utils.sendColorizedMessage
-import me.aggellos2001.ksurvivaleuplugin.utils.toNiceString
-import me.mattstudios.mfgui.gui.components.util.ItemBuilder
-import me.mattstudios.mfgui.gui.guis.Gui
-import me.mattstudios.mfgui.gui.guis.GuiItem
+import me.aggellos2001.ksurvivaleuplugin.utils.*
+import net.kyori.adventure.text.format.TextColor
 import org.bukkit.ChatColor
 import org.bukkit.Material
 import org.bukkit.entity.Player
@@ -28,10 +28,10 @@ object Settings : BaseCommand() {
 
         val data = player.getPluginPlayerData()
 
-        Gui(1, "<g:#ff8000:#31bd1d>Settings Menu".colorize()).apply {
-            setDefaultClickAction {
-                it.isCancelled = true
-            }
+        Gui(1, legacyTextOf("<g:#ff8000:#31bd1d>Settings Menu").content(), InteractionModifier.VALUES).apply {
+//            setDefaultClickAction {
+//                it.isCancelled = true
+//            }
             addSlotAction(2) {
                 val keepInv = data.keepInventory
                 data.keepInventory = !keepInv
@@ -59,11 +59,11 @@ object Settings : BaseCommand() {
             setItem(3, getStateButton("&eSit on stair blocks", player.getPluginPlayerData().sittingOnStairs))
             setItem(4, getStateButton("&ePvP", player.getPluginPlayerData().pvp))
             setItem(5, ItemBuilder.from(Material.PAPER)
-                .setName("&eChat color".colorize())
+                .name("&eChat color".colorizeToComponent())
                 .glow(true)
-                .setLore(
+                .lore(
                     ("&${data.chatColor}" + ChatColor.getByChar(player.getPluginPlayerData().chatColor)
-                        ?.toNiceString()).colorize()
+                        ?.toNiceString()).colorizeToComponent()
                 ).asGuiItem {
                     colorUI(player, this)
                 })
@@ -75,10 +75,10 @@ object Settings : BaseCommand() {
 
     private fun colorUI(player: Player, settingsUI: Gui) {
 
-        Gui(2, "<r:0.8:1.0>Chat Color Menu".colorize()).run {
-            setDefaultClickAction {
-                it.isCancelled = true
-            }
+        Gui(2, legacyTextOf("<r:0.8:1.0>Chat Color Menu").content(), InteractionModifier.VALUES).run {
+//            setDefaultClickAction {
+//                it.isCancelled = true
+//            }
 
 
             val data = player.getPluginPlayerData()
@@ -88,7 +88,7 @@ object Settings : BaseCommand() {
                 if (!color.isColor) continue
                 val menuName = "&${color.char}${color.toNiceString()}".colorize()
                 addItem(ItemBuilder.from(getDyeFromColor(color))
-                    .setName(menuName)
+                    .name(legacyTextOf(menuName))
                     .asGuiItem {
                         data.chatColor = color.char
                         player.setPluginPlayerData(data)
@@ -98,7 +98,7 @@ object Settings : BaseCommand() {
             }
 
             setItem(17, ItemBuilder.from(Material.OAK_DOOR)
-                .setName("<#bbbd60>**Back**".colorize())
+                .name(textOf("**Back**", TextColor.fromHexString("#bbbd60")))
                 .glow(true)
                 .asGuiItem {
                     settingsUI.open(it.whoClicked)
@@ -112,9 +112,9 @@ object Settings : BaseCommand() {
 
     private fun getStateButton(name: String, state: Boolean): GuiItem {
         return ItemBuilder.from(if (state) Material.GREEN_WOOL else Material.RED_WOOL)
-            .setName((if (state) "&a&lON" else "&c&lOFF").colorize())
-            .setLore(name.colorize())
-            .addItemFlags(*ItemFlag.values())
+            .name((if (state) "&a&lON" else "&c&lOFF").colorizeToComponent())
+            .lore(name.colorizeToComponent())
+            .flags(*ItemFlag.values())
             .asGuiItem()
     }
 

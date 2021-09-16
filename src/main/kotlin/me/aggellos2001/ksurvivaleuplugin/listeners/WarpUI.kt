@@ -1,9 +1,12 @@
 package me.aggellos2001.ksurvivaleuplugin.listeners
 
+import dev.triumphteam.gui.builder.item.ItemBuilder
+import dev.triumphteam.gui.components.InteractionModifier
+import dev.triumphteam.gui.guis.PaginatedGui
 import me.aggellos2001.ksurvivaleuplugin.plugin.ESSENTIALS_API
-import me.aggellos2001.ksurvivaleuplugin.utils.colorize
-import me.mattstudios.mfgui.gui.components.util.ItemBuilder
-import me.mattstudios.mfgui.gui.guis.PaginatedGui
+import me.aggellos2001.ksurvivaleuplugin.utils.textOf
+import net.kyori.adventure.text.format.NamedTextColor
+import net.kyori.adventure.text.format.TextDecoration
 import org.bukkit.Bukkit
 import org.bukkit.Material
 import org.bukkit.event.EventHandler
@@ -31,7 +34,7 @@ object WarpUI : Listener {
             else -> 6
         }
 
-        PaginatedGui(rows, "&cWarps".colorize()).run {
+        PaginatedGui(rows, 0, textOf("Warps", NamedTextColor.YELLOW).content(), InteractionModifier.VALUES).run {
             setDefaultClickAction {
                 it.isCancelled = true
             }
@@ -42,12 +45,13 @@ object WarpUI : Listener {
                     warpName.contains("game", true) -> Material.EMERALD
                     else -> Material.MAP
                 }
-                addItem(ItemBuilder.from(material)
-                    .setName("&e&l$warpName".colorize())
-                    .glow(true)
-                    .asGuiItem {
-                        Bukkit.dispatchCommand(player, "warp $warpName")
-                    }
+                addItem(
+                    ItemBuilder.from(material)
+                        .name(textOf(warpName, NamedTextColor.YELLOW, TextDecoration.BOLD))
+                        .glow(true)
+                        .asGuiItem {
+                            Bukkit.dispatchCommand(player, "warp $warpName")
+                        }
                 )
             }
             open(player)

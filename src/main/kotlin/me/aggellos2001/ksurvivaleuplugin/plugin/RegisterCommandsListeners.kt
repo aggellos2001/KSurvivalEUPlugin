@@ -41,6 +41,7 @@ fun registerCommandsAndEvents() {
         registerCommand(OreBroadcast)
         registerCommand(Colors)
         registerCommand(GlowNear)
+        registerCommand(Rules)
     }
 
     pluginInstance.run {
